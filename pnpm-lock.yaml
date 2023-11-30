@@ -7,7 +7,6 @@ specifiers:
     '@typescript-eslint/parser': ^6.13.1
     copy-webpack-plugin: ^11.0.0
     eslint: ^8.54.0
-    eslint-pre-commit-hook: ^3.0.3
     husky: ^8.0.0
     prettier: ^3.1.0
     react: ^18.2.0
@@ -29,7 +28,6 @@ devDependencies:
     '@typescript-eslint/parser': 6.13.1_t4y562kuozn2x6kqiutrjmhi5a
     copy-webpack-plugin: 11.0.0_webpack@5.89.0
     eslint: 8.54.0
-    eslint-pre-commit-hook: 3.0.3_eslint@8.54.0
     husky: 8.0.3
     prettier: 3.1.0
     ts-loader: 9.5.1_uikrn7yhbzicg3wfc2us3hci5e
@@ -1574,20 +1572,6 @@ packages:
                 integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==,
             }
         engines: { node: '>=10' }
-        dev: true
-
-    /eslint-pre-commit-hook/3.0.3_eslint@8.54.0:
-        resolution:
-            {
-                integrity: sha512-jlHfxKfOJIIDwu8gaZrjHEOgEuh7JH4FEeYLJnrqpNdL3VAof6z6YObWCvQwIyqcxAOWoijuHrN3QzTvywiEdA==,
-            }
-        engines: { node: '>=18' }
-        hasBin: true
-        requiresBuild: true
-        peerDependencies:
-            eslint: ^8.0.0
-        dependencies:
-            eslint: 8.54.0
         dev: true
 
     /eslint-scope/5.1.1:

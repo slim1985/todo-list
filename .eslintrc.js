@@ -9,11 +9,11 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     root: true,
     ignorePatterns: [
-        "**/node_modules/**",
-        "**/*.d.ts.map",
-        "**/*.d.ts",
-        "**/dist/**",
-        "**/build/**",
-        "webpack.config.dev.js",
+        '**/node_modules/**',
+        '**/*.d.ts.map',
+        '**/*.d.ts',
+        '**/dist/**',
+        '**/build/**',
+        'webpack.config.dev.js',
     ],
 };

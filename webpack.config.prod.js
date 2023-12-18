@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.tsx',
     module: {
         rules: [
@@ -17,7 +17,7 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     output: {
-        filename: 'bundle.js',
+        filename: 'bundle.[fullhash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
@@ -26,7 +26,4 @@ module.exports = {
             template: './public/index.html',
         }),
     ],
-    devServer: {
-        static: './dist',
-    },
 };

@@ -5,6 +5,9 @@ module.exports = {
         node: true,
     },
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+    rules: {
+        '@typescript-eslint/explicit-function-return-type': 'error',
+    },
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
     root: true,
@@ -15,5 +18,6 @@ module.exports = {
         '**/dist/**',
         '**/build/**',
         'webpack.config.dev.js',
+        'webpack.config.prod.js',
     ],
 };

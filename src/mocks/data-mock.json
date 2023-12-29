@@ -1,19 +1,19 @@
 [
     {
         "id": "1",
-        "title": "task 1",
+        "title": "Create project using React + Typescript + TalewindCSS",
         "description": "task 1 description",
         "status": "new"
     },
     {
         "id": "2",
-        "title": "task 2",
+        "title": "Configure engineering process",
         "description": "task 2 description",
         "status": "active"
     },
     {
         "id": "3",
-        "title": "task 3",
+        "title": "Configure continiouse delivery",
         "description": "task 3 description",
         "status": "completed"
     },
@@ -21,6 +21,54 @@
         "id": "4",
         "title": "task 4",
         "description": "task 4 description",
+        "status": "new"
+    },
+    {
+        "id": "5",
+        "title": "task 5",
+        "description": "task 5 description",
+        "status": "new"
+    },
+    {
+        "id": "6",
+        "title": "task 6",
+        "description": "task 6 description",
+        "status": "active"
+    },
+    {
+        "id": "7",
+        "title": "task 7",
+        "description": "task 7 description",
+        "status": "completed"
+    },
+    {
+        "id": "8",
+        "title": "task 8",
+        "description": "task 8 description",
+        "status": "new"
+    },
+    {
+        "id": "9",
+        "title": "task 9",
+        "description": "task 1 description",
+        "status": "new"
+    },
+    {
+        "id": "10",
+        "title": "task 10",
+        "description": "task 10 description",
+        "status": "active"
+    },
+    {
+        "id": "11",
+        "title": "task 11",
+        "description": "task 11 description",
+        "status": "completed"
+    },
+    {
+        "id": "12",
+        "title": "task 12",
+        "description": "task 12 description",
         "status": "new"
     }
 ]

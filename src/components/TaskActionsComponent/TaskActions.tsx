@@ -4,27 +4,24 @@ import { Task, TaskStates } from '../../types/task';
 export interface TaskActionsProps {
     tasks: Task[];
     setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
-    setShowTaskView: React.Dispatch<React.SetStateAction<string>>;
+    setActualTaskId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function TaskActions({
     tasks,
     setTaskList,
-    setShowTaskView,
+    setActualTaskId,
 }: TaskActionsProps): JSX.Element {
     function createTask(): void {
-        const newTaskList = tasks.map((obj) => ({ ...obj }));
         const newTask: Task = {
-            id: (newTaskList.length + 1).toString(),
+            id: (tasks.length + 1).toString(),
             title: 'Title',
             description: 'Description',
-            status: TaskStates.new,
+            status: TaskStates.NEW,
         };
 
-        newTaskList.push(newTask);
-
-        setTaskList(newTaskList);
-        setShowTaskView(newTask.id);
+        setTaskList([...tasks, newTask]);
+        setActualTaskId(newTask.id);
     }
     return (
         <div className="flex justify-end space-x-3">

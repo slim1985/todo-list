@@ -6,7 +6,7 @@ export interface Task {
 }
 
 export enum TaskStates {
-    new = 'new',
-    active = 'active',
-    completed = 'completed',
+    NEW = 'new',
+    ACTIVE = 'active',
+    COMPLETED = 'completed',
 }

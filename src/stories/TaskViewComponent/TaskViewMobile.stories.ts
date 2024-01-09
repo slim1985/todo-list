@@ -25,7 +25,7 @@ export const TaskViewEmpty: Story = {
             id: '',
             title: '',
             description: '',
-            status: TaskStates.new,
+            status: TaskStates.NEW,
         },
         taskList: taskList,
     },

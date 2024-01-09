@@ -1,28 +1,28 @@
 import { useState } from 'react';
-import tasks from '../../mocks/data-mock.json';
+import mockedTasks from '../../mocks/data-mock.json';
 import { Task } from '../../types/task';
 import { TaskListPanel } from '../../components/TaskListPanelComponent/TaskListPanel';
 import { TaskView } from '../../components/TaskViewComponent/TaskView';
 
 export function Container(): JSX.Element {
-    const [taskList, setTaskList] = useState(
-        JSON.parse(JSON.stringify(tasks)) as Task[],
-    );
-    const [showTaskView, setShowTaskView] = useState('');
+    const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
+
+    const [taskList, setTaskList] = useState([...tasks]);
+    const [actualTaskId, setActualTaskId] = useState('');
 
     return (
         <div className="p-2">
-            {showTaskView === '' ? (
+            {actualTaskId === '' ? (
                 <TaskListPanel
                     tasks={taskList}
                     setTaskList={setTaskList}
-                    setShowTaskView={setShowTaskView}
+                    setActualTaskId={setActualTaskId}
                 />
             ) : (
                 <TaskView
-                    task={taskList.find((f) => f.id == showTaskView)!}
+                    task={taskList.find((f) => f.id == actualTaskId)!}
                     taskList={taskList}
-                    setShowTaskView={setShowTaskView}
+                    setActualTaskId={setActualTaskId}
                     setTaskList={setTaskList}
                 />
             )}

@@ -4,29 +4,30 @@ import { Task, TaskStates } from '../../types/task';
 export interface TaskViewProps {
     task: Task;
     taskList: Task[];
-    setShowTaskView: React.Dispatch<React.SetStateAction<string>>;
+    setActualTaskId: React.Dispatch<React.SetStateAction<string>>;
     setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
 export function TaskView({
     task,
     taskList,
-    setShowTaskView,
+    setActualTaskId,
     setTaskList,
 }: TaskViewProps): JSX.Element {
-    const [selectedStatus, setSelectedStatus] = React.useState<TaskStates>(
-        task.status,
-    );
-    const [title, setTitle] = React.useState<string>(task.title);
-    const [description, setDescription] = React.useState<string>(
-        task.description,
-    );
+    const {
+        status: initialStatus,
+        title: initialTitle,
+        description: initialDescription,
+    } = task;
+    const [status, setSelectedStatus] =
+        React.useState<TaskStates>(initialStatus);
+    const [title, setTitle] = React.useState<string>(initialTitle);
+    const [description, setDescription] =
+        React.useState<string>(initialDescription);
 
     function onChangeStatus(event: React.ChangeEvent<HTMLSelectElement>): void {
         setSelectedStatus(
-            TaskStates[
-                event.target.value.toString() as keyof typeof TaskStates
-            ],
+            event.target.value as React.SetStateAction<TaskStates>,
         );
     }
 
@@ -43,22 +44,22 @@ export function TaskView({
     }
 
     function saveTask(): void {
-        const tasks = taskList.map((obj) => ({ ...obj }));
+        const tasks = [...taskList];
         const index = tasks.findIndex((f) => f.id === task.id);
 
-        tasks[index].status = selectedStatus;
+        tasks[index].status = status;
         tasks[index].title = title;
         tasks[index].description = description;
 
         setTaskList(tasks);
-        setShowTaskView('');
+        setActualTaskId('');
     }
 
     function deleteTask(): void {
-        const tasks = taskList.map((obj) => ({ ...obj }));
+        const tasks = [...taskList];
 
         setTaskList(tasks.filter((f) => f.id !== task.id));
-        setShowTaskView('');
+        setActualTaskId('');
     }
 
     return (
@@ -76,13 +77,10 @@ export function TaskView({
                 ></textarea>
                 <label className="m-1">
                     State:
-                    <select
-                        value={selectedStatus}
-                        onChange={(e) => onChangeStatus(e)}
-                    >
+                    <select value={status} onChange={(e) => onChangeStatus(e)}>
                         {Object.keys(TaskStates).map((state, index) => (
                             <option key={index} value={state}>
-                                {state}
+                                {Object.values(TaskStates)[index]}
                             </option>
                         ))}
                     </select>
@@ -96,7 +94,7 @@ export function TaskView({
                     Save
                 </button>
                 <button
-                    onClick={() => setShowTaskView('')}
+                    onClick={() => setActualTaskId('')}
                     className="my-2 p-1 bg-yellow-400 rounded-md"
                 >
                     Cancel

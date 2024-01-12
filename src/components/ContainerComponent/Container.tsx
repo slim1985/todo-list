@@ -2,7 +2,7 @@ import { useState } from 'react';
 import mockedTasks from '../../mocks/data-mock.json';
 import { Task } from '../../types/task';
 import { TaskListPanel } from '../../components/TaskListPanelComponent/TaskListPanel';
-import { TaskView } from '../../components/TaskViewComponent/TaskView';
+import { TaskForm } from '../../components/TaskFormComponent/TaskForm';
 
 export function Container(): JSX.Element {
     const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
@@ -19,7 +19,7 @@ export function Container(): JSX.Element {
                     setActualTaskId={setActualTaskId}
                 />
             ) : (
-                <TaskView
+                <TaskForm
                     task={taskList.find((f) => f.id == actualTaskId)!}
                     taskList={taskList}
                     setActualTaskId={setActualTaskId}

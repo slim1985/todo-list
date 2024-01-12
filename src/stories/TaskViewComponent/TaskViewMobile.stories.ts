@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { TaskView } from '../../components/TaskViewComponent/TaskView';
+import { TaskForm } from '../../components/TaskFormComponent/TaskForm';
 import { Task, TaskStates } from '../../types/task';
 import tasks from '../../mocks/data-mock.json';
 
 type Story = StoryObj<typeof meta>;
 
-const meta: Meta<typeof TaskView> = {
-    component: TaskView,
+const meta: Meta<typeof TaskForm> = {
+    component: TaskForm,
     parameters: {
         viewport: {
             defaultViewport: 'mobile1',
@@ -18,7 +18,7 @@ const taskList = JSON.parse(JSON.stringify(tasks)) as Task[];
 
 export default meta;
 
-export const TaskViewEmpty: Story = {
+export const TaskFormEmpty: Story = {
     name: 'Empty',
     args: {
         task: {
@@ -31,7 +31,7 @@ export const TaskViewEmpty: Story = {
     },
 };
 
-export const TaskViewNonEmpty: Story = {
+export const TaskFormNonEmpty: Story = {
     name: 'Non empty',
     args: {
         task: taskList[0],

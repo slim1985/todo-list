@@ -1,19 +1,19 @@
 import React from 'react';
 import { Task, TaskStates } from '../../types/task';
 
-export interface TaskViewProps {
+export interface TaskFormProps {
     task: Task;
     taskList: Task[];
     setActualTaskId: React.Dispatch<React.SetStateAction<string>>;
     setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-export function TaskView({
+export function TaskForm({
     task,
     taskList,
     setActualTaskId,
     setTaskList,
-}: TaskViewProps): JSX.Element {
+}: TaskFormProps): JSX.Element {
     const {
         status: initialStatus,
         title: initialTitle,

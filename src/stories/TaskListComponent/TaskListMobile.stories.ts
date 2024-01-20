@@ -19,7 +19,7 @@ const taskList = JSON.parse(JSON.stringify(tasks)) as Task[];
 export default meta;
 
 export const Simple: Story = {
-    name: 'TaskList',
+    name: 'TaskListPanel',
     args: {
         tasks: taskList,
     },

@@ -1,26 +1,28 @@
 import React from 'react';
 import { Task, TaskStates } from '../../types/task';
+import { TaskHelper } from '../../helpers/taskHelper';
 
 export interface TaskFormProps {
     task: Task;
-    taskList: Task[];
-    setActualTaskId: React.Dispatch<React.SetStateAction<string>>;
-    setTaskList: React.Dispatch<React.SetStateAction<Task[]>>;
+    setShowTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
+    saveTask: (task: Task) => void;
+    deleteTask: (taskId: string) => void;
 }
 
 export function TaskForm({
     task,
-    taskList,
-    setActualTaskId,
-    setTaskList,
+    setShowTaskForm,
+    saveTask,
+    deleteTask,
 }: TaskFormProps): JSX.Element {
     const {
         status: initialStatus,
         title: initialTitle,
         description: initialDescription,
     } = task;
-    const [status, setSelectedStatus] =
-        React.useState<TaskStates>(initialStatus);
+    const [status, setSelectedStatus] = React.useState<TaskStates>(
+        initialStatus as unknown as TaskStates,
+    );
     const [title, setTitle] = React.useState<string>(initialTitle);
     const [description, setDescription] =
         React.useState<string>(initialDescription);
@@ -43,68 +45,72 @@ export function TaskForm({
         setDescription(event.target.value);
     }
 
-    function saveTask(): void {
-        const tasks = [...taskList];
-        const index = tasks.findIndex((f) => f.id === task.id);
+    function onSaveClick(): void {
+        const newTask: Task = {
+            id: task.id,
+            title: title,
+            description: description,
+            status: status,
+        };
 
-        tasks[index].status = status;
-        tasks[index].title = title;
-        tasks[index].description = description;
-
-        setTaskList(tasks);
-        setActualTaskId('');
+        setShowTaskForm(false);
+        saveTask(newTask);
     }
 
-    function deleteTask(): void {
-        const tasks = [...taskList];
-
-        setTaskList(tasks.filter((f) => f.id !== task.id));
-        setActualTaskId('');
+    function onDeleteTaskClick(): void {
+        deleteTask(task.id);
+        setShowTaskForm(false);
     }
 
     return (
-        <div className="flex flex-col h-screen">
-            <div className="flex flex-col h-full self-stretch">
+        <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
+            <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
                 <textarea
-                    className="h-1/6 border-solid border-2 border-yellow-400 rounded m-1 p-1"
+                    className="h-24 border-solid border-2 border-yellow-200 rounded m-1 p-1"
                     value={title}
                     onChange={(e) => onTitleChange(e)}
                 ></textarea>
                 <textarea
-                    className="h-5/6 border-solid border-2 border-yellow-400 rounded m-1 p-1"
+                    className="h-full border-solid border-2 border-yellow-200 rounded m-1 p-1"
                     value={description}
                     onChange={(e) => onDescriptionChange(e)}
                 ></textarea>
-                <label className="m-1">
-                    State:
-                    <select value={status} onChange={(e) => onChangeStatus(e)}>
-                        {Object.keys(TaskStates).map((state, index) => (
-                            <option key={index} value={state}>
-                                {Object.values(TaskStates)[index]}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            <div className="flex self-stretch self-end justify-center my-5 space-x-3">
-                <button
-                    onClick={() => saveTask()}
-                    className="my-2 p-1 bg-green-400 rounded-md"
+                <select
+                    className="text-3xl m-1"
+                    value={status}
+                    onChange={(e) => onChangeStatus(e)}
                 >
-                    Save
-                </button>
-                <button
-                    onClick={() => setActualTaskId('')}
-                    className="my-2 p-1 bg-yellow-400 rounded-md"
-                >
-                    Cancel
-                </button>
-                <button
-                    onClick={() => deleteTask()}
-                    className="my-2 p-1 bg-red-400 rounded-md"
-                >
-                    Delete
-                </button>
+                    {Object.keys(TaskStates).map((state, index) => (
+                        <option
+                            key={index}
+                            value={TaskStates[state as keyof typeof TaskStates]}
+                        >
+                            {TaskHelper.getTaskStateLabel(
+                                Object.values(TaskStates)[index],
+                            )}
+                        </option>
+                    ))}
+                </select>
+                <div className="flex justify-center my-5 mx-3 space-x-7">
+                    <button
+                        onClick={() => onSaveClick()}
+                        className="size-20 p-1 bg-green-300 rounded-md"
+                    >
+                        Save
+                    </button>
+                    <button
+                        onClick={() => setShowTaskForm(false)}
+                        className="size-20 p-1 bg-yellow-300 rounded-md"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={() => onDeleteTaskClick()}
+                        className="size-20 p-1 bg-red-300 rounded-md"
+                    >
+                        Delete
+                    </button>
+                </div>
             </div>
         </div>
     );

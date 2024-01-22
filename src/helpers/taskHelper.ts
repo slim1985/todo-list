@@ -13,4 +13,17 @@ export class TaskHelper {
                 return '';
         }
     }
+
+    static getTaskStateColor(taskState: TaskStates): string {
+        switch (taskState) {
+            case TaskStates.NEW:
+                return 'text-green-700';
+            case TaskStates.ACTIVE:
+                return 'text-blue-700';
+            case TaskStates.COMPLETED:
+                return 'text-gray-700';
+            default:
+                return 'text-black';
+        }
+    }
 }

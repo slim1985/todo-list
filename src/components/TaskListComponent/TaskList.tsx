@@ -31,7 +31,7 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
     }
 
     function saveTask(task: Task): void {
-        const newTaskList = [...taskList];
+        const newTaskList = [...taskList].map((task) => ({ ...task }));
 
         if (!task.id) {
             let id: number = newTaskList.length + 1;
@@ -43,9 +43,9 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
         } else {
             const index = newTaskList.findIndex((f) => f.id === task.id);
 
-            newTaskList[index].status = task.status;
             newTaskList[index].title = task.title;
             newTaskList[index].description = task.description;
+            newTaskList[index].status = task.status;
         }
 
         setTaskList(newTaskList);

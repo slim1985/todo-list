@@ -65,16 +65,6 @@ export function TaskForm({
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
-                <textarea
-                    className="h-24 border-solid border-2 border-yellow-200 rounded m-1 p-1"
-                    value={title}
-                    onChange={(e) => onTitleChange(e)}
-                ></textarea>
-                <textarea
-                    className="h-full border-solid border-2 border-yellow-200 rounded m-1 p-1"
-                    value={description}
-                    onChange={(e) => onDescriptionChange(e)}
-                ></textarea>
                 <select
                     className="text-3xl m-1"
                     value={status}
@@ -91,6 +81,16 @@ export function TaskForm({
                         </option>
                     ))}
                 </select>
+                <textarea
+                    className="h-24 border-solid border-2 border-yellow-200 rounded m-1 p-1"
+                    value={title}
+                    onChange={(e) => onTitleChange(e)}
+                ></textarea>
+                <textarea
+                    className="h-full border-solid border-2 border-yellow-200 rounded m-1 p-1"
+                    value={description}
+                    onChange={(e) => onDescriptionChange(e)}
+                ></textarea>
                 <div className="flex justify-center my-5 mx-3 space-x-7">
                     <button
                         onClick={() => onSaveClick()}

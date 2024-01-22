@@ -35,7 +35,8 @@ export const TaskCard = memo(
             prevProps.task.id === nextProps.task.id &&
             prevProps.task.title === nextProps.task.title &&
             prevProps.task.description === nextProps.task.description &&
-            prevProps.task.status === nextProps.task.status
+            prevProps.task.status === nextProps.task.status &&
+            prevProps.onClick === nextProps.onClick
         ) {
             return true;
         }

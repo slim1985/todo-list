@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Task, TaskStates } from '../../types/task';
 import { TaskCard } from '../TaskCardComponent/TaskCard';
 import { TaskForm } from '../TaskFormComponent/TaskForm';
@@ -12,6 +12,12 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
     const [selectedTask, setSelectedTask] = useState<Task>();
     const [taskList, setTaskList] = useState<Task[]>([...tasks]);
 
+    const openTaskDetails = useCallback((id: string) => {
+        const task = taskList.find((task) => task.id === id)!;
+        setSelectedTask(task);
+        setShowTaskForm(true);
+    }, []);
+
     function createTask(): void {
         const newTask: Task = {
             id: '',
@@ -21,12 +27,6 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
         };
 
         setSelectedTask(newTask);
-        setShowTaskForm(true);
-    }
-
-    function openTaskDetails(id: string): void {
-        const task = taskList.find((task) => task.id === id)!;
-        setSelectedTask(task);
         setShowTaskForm(true);
     }
 

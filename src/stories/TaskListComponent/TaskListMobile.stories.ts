@@ -21,6 +21,8 @@ export default meta;
 export const Simple: Story = {
     name: 'TaskListPanel',
     args: {
-        tasks: taskList,
+        taskList: taskList,
+        deleteTask: () => {},
+        saveTask: () => {},
     },
 };

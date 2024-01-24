@@ -1,6 +1,6 @@
-import { Container } from './components/ContainerComponent/Container';
+import { TaskContainer } from './components/TaskContainerComponent/TaskContainer';
 import './index.css';
 
 export default function App(): JSX.Element {
-    return <Container />;
+    return <TaskContainer />;
 }

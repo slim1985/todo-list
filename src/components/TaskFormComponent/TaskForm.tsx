@@ -5,7 +5,12 @@ import { TaskHelper } from '../../helpers/taskHelper';
 export interface TaskFormProps {
     task: Task;
     setShowTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
-    saveTask: (task: Task) => void;
+    saveTask: (
+        id: string,
+        title: string,
+        description: string,
+        status: TaskStates,
+    ) => void;
     deleteTask: (taskId: string) => void;
 }
 
@@ -20,17 +25,13 @@ export function TaskForm({
         title: initialTitle,
         description: initialDescription,
     } = task;
-    const [status, setSelectedStatus] = React.useState<TaskStates>(
-        initialStatus as unknown as TaskStates,
-    );
+    const [status, setSelectedStatus] = React.useState(initialStatus);
     const [title, setTitle] = React.useState<string>(initialTitle);
     const [description, setDescription] =
         React.useState<string>(initialDescription);
 
     function onChangeStatus(event: React.ChangeEvent<HTMLSelectElement>): void {
-        setSelectedStatus(
-            event.target.value as React.SetStateAction<TaskStates>,
-        );
+        setSelectedStatus(+event.target.value);
     }
 
     function onTitleChange(
@@ -46,15 +47,8 @@ export function TaskForm({
     }
 
     function onSaveClick(): void {
-        const newTask: Task = {
-            id: task.id,
-            title: title,
-            description: description,
-            status: status,
-        };
-
         setShowTaskForm(false);
-        saveTask(newTask);
+        saveTask(task.id, title, description, status);
     }
 
     function onDeleteTaskClick(): void {
@@ -71,13 +65,8 @@ export function TaskForm({
                     onChange={(e) => onChangeStatus(e)}
                 >
                     {Object.keys(TaskStates).map((state, index) => (
-                        <option
-                            key={index}
-                            value={TaskStates[state as keyof typeof TaskStates]}
-                        >
-                            {TaskHelper.getTaskStateLabel(
-                                Object.values(TaskStates)[index],
-                            )}
+                        <option key={index} value={state}>
+                            {TaskHelper.getTaskStateLabel(index)}
                         </option>
                     ))}
                 </select>

@@ -1,22 +1,32 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Task, TaskStates } from '../../types/task';
-import { TaskCard } from '../TaskCardComponent/TaskCard';
+import { TaskCardMemo } from '../TaskCardComponent/TaskCard';
 import { TaskForm } from '../TaskFormComponent/TaskForm';
 
 export interface TaskListPanelProps {
-    tasks: Task[];
+    taskList: Task[];
+    saveTask: (
+        id: string,
+        title: string,
+        description: string,
+        status: TaskStates,
+    ) => void;
+    deleteTask: (taskId: string) => void;
 }
 
-export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
+export function TaskList({
+    taskList,
+    saveTask,
+    deleteTask,
+}: TaskListPanelProps): JSX.Element {
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [selectedTask, setSelectedTask] = useState<Task>();
-    const [taskList, setTaskList] = useState<Task[]>([...tasks]);
 
-    const openTaskDetails = useCallback((id: string) => {
+    function openTaskDetails(id: string): void {
         const task = taskList.find((task) => task.id === id)!;
         setSelectedTask(task);
         setShowTaskForm(true);
-    }, []);
+    }
 
     function createTask(): void {
         const newTask: Task = {
@@ -28,32 +38,6 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
 
         setSelectedTask(newTask);
         setShowTaskForm(true);
-    }
-
-    function saveTask(task: Task): void {
-        const newTaskList = [...taskList].map((task) => ({ ...task }));
-
-        if (!task.id) {
-            let id: number = newTaskList.length + 1;
-            while (newTaskList.find((f) => f.id === id.toString())) {
-                id++;
-            }
-            task.id = id.toString();
-            newTaskList.push(task);
-        } else {
-            const index = newTaskList.findIndex((f) => f.id === task.id);
-
-            newTaskList[index].title = task.title;
-            newTaskList[index].description = task.description;
-            newTaskList[index].status = task.status;
-        }
-
-        setTaskList(newTaskList);
-    }
-
-    function deleteTask(taskId: string): void {
-        const newTaskList = [...taskList];
-        setTaskList(newTaskList.filter((f) => f.id !== taskId));
     }
 
     return (
@@ -69,7 +53,7 @@ export function TaskList({ tasks }: TaskListPanelProps): JSX.Element {
                 </div>
                 <div className="flex flex-wrap justify-center mt-3">
                     {taskList.map((task: Task, index: number) => (
-                        <TaskCard
+                        <TaskCardMemo
                             key={index}
                             task={task}
                             onClick={openTaskDetails}

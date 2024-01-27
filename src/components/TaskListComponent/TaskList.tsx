@@ -5,7 +5,12 @@ import { TaskForm } from '../TaskFormComponent/TaskForm';
 
 export interface TaskListPanelProps {
     taskList: Task[];
-    saveTask: (
+    createTask: (
+        title: string,
+        description: string,
+        status: TaskStates,
+    ) => void;
+    updateTask: (
         id: string,
         title: string,
         description: string,
@@ -16,7 +21,8 @@ export interface TaskListPanelProps {
 
 export function TaskList({
     taskList,
-    saveTask,
+    createTask,
+    updateTask,
     deleteTask,
 }: TaskListPanelProps): JSX.Element {
     const [showTaskForm, setShowTaskForm] = useState(false);
@@ -28,7 +34,7 @@ export function TaskList({
         setShowTaskForm(true);
     }
 
-    function createTask(): void {
+    function onCreateTaskClick(): void {
         const newTask: Task = {
             id: '',
             title: 'Title',
@@ -45,7 +51,7 @@ export function TaskList({
             <div>
                 <div className="flex justify-end sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2">
                     <button
-                        onClick={() => createTask()}
+                        onClick={() => onCreateTaskClick()}
                         className="size-20 my-2 mr-2 p-1 bg-gray-300 rounded-md"
                     >
                         Create
@@ -65,7 +71,8 @@ export function TaskList({
                 <TaskForm
                     task={selectedTask!}
                     setShowTaskForm={setShowTaskForm}
-                    saveTask={saveTask}
+                    createTask={createTask}
+                    updateTask={updateTask}
                     deleteTask={deleteTask}
                 />
             )}

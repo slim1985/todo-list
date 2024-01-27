@@ -10,6 +10,7 @@ specifiers:
     '@storybook/react': 7.6.6
     '@storybook/react-webpack5': 7.6.6
     '@storybook/test': 7.6.6
+    '@types/lodash.isequal': ^4.5.8
     '@types/react': ^18.2.38
     '@types/react-dom': ^18.2.17
     '@typescript-eslint/eslint-plugin': ^6.13.1
@@ -19,6 +20,7 @@ specifiers:
     eslint-plugin-storybook: ^0.6.15
     html-webpack-plugin: ^5.5.3
     husky: ^8.0.0
+    lodash.isequal: ^4.5.0
     postcss: ^8.4.32
     postcss-loader: ^7.3.3
     postcss-preset-env: ^9.3.0
@@ -37,6 +39,7 @@ specifiers:
 dependencies:
     '@types/react': 18.2.38
     '@types/react-dom': 18.2.17
+    lodash.isequal: 4.5.0
     react: 18.2.0
     react-dom: 18.2.0_react@18.2.0
 
@@ -50,6 +53,7 @@ devDependencies:
     '@storybook/react': 7.6.6_qteoitgymghawmscxhxzhpu7na
     '@storybook/react-webpack5': 7.6.6_2wy4yuzvwa4xgb4inv3nfsmwf4
     '@storybook/test': 7.6.6
+    '@types/lodash.isequal': 4.5.8
     '@typescript-eslint/eslint-plugin': 6.13.1_pxvisawvdf6aznirz3pqeakgqa
     '@typescript-eslint/parser': 6.13.1_t4y562kuozn2x6kqiutrjmhi5a
     css-loader: 6.8.1_webpack@5.89.0
@@ -5214,6 +5218,15 @@ packages:
             }
         dev: true
 
+    /@types/lodash.isequal/4.5.8:
+        resolution:
+            {
+                integrity: sha512-uput6pg4E/tj2LGxCZo9+y27JNyB2OZuuI/T5F+ylVDYuqICLG2/ktjxx0v6GvVntAf8TvEzeQLcV0ffRirXuA==,
+            }
+        dependencies:
+            '@types/lodash': 4.14.202
+        dev: true
+
     /@types/lodash/4.14.202:
         resolution:
             {
@@ -10253,6 +10266,13 @@ packages:
                 integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==,
             }
         dev: true
+
+    /lodash.isequal/4.5.0:
+        resolution:
+            {
+                integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==,
+            }
+        dev: false
 
     /lodash.merge/4.6.2:
         resolution:

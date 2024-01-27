@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { Task } from '../../types/task';
-import { TaskHelper } from '../../helpers/taskHelper';
+import isEqual from 'lodash.isequal';
+import { Task, TaskStateLabels, TaskStateColors } from '../../types/task';
 
 export interface TaskCardProps {
     task: Task;
@@ -22,8 +22,8 @@ export function TaskCard({
             </p>
             <p className="w-full font-bold">
                 Task state:{' '}
-                <span className={TaskHelper.getTaskStateColor(status)}>
-                    {TaskHelper.getTaskStateLabel(status)}
+                <span className={TaskStateColors[status]}>
+                    {TaskStateLabels[status]}
                 </span>
             </p>
         </div>
@@ -31,14 +31,5 @@ export function TaskCard({
 }
 
 export const TaskCardMemo = memo(TaskCard, (prevProps, nextProps) => {
-    if (
-        prevProps.task.id === nextProps.task.id &&
-        prevProps.task.title === nextProps.task.title &&
-        prevProps.task.description === nextProps.task.description &&
-        prevProps.task.status === nextProps.task.status
-    ) {
-        return true;
-    }
-
-    return false;
+    return isEqual(prevProps.task, nextProps.task);
 });

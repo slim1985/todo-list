@@ -1,11 +1,21 @@
 import React from 'react';
-import { Task, TaskStates } from '../../types/task';
-import { TaskHelper } from '../../helpers/taskHelper';
+import { Task, TaskStates, TaskStateLabels } from '../../types/task';
+
+enum ControlNames {
+    Title = 'title',
+    Description = 'description',
+    Status = 'status',
+}
 
 export interface TaskFormProps {
     task: Task;
     setShowTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
-    saveTask: (
+    createTask: (
+        title: string,
+        description: string,
+        status: TaskStates,
+    ) => void;
+    updateTask: (
         id: string,
         title: string,
         description: string,
@@ -17,38 +27,46 @@ export interface TaskFormProps {
 export function TaskForm({
     task,
     setShowTaskForm,
-    saveTask,
+    createTask,
+    updateTask,
     deleteTask,
 }: TaskFormProps): JSX.Element {
-    const {
-        status: initialStatus,
-        title: initialTitle,
-        description: initialDescription,
-    } = task;
-    const [status, setSelectedStatus] = React.useState(initialStatus);
-    const [title, setTitle] = React.useState<string>(initialTitle);
-    const [description, setDescription] =
-        React.useState<string>(initialDescription);
+    const [currentTask, setCurrentTask] = React.useState({
+        status: task.status,
+        title: task.title,
+        description: task.description,
+    });
 
-    function onChangeStatus(event: React.ChangeEvent<HTMLSelectElement>): void {
-        setSelectedStatus(+event.target.value);
-    }
-
-    function onTitleChange(
-        event: React.ChangeEvent<HTMLTextAreaElement>,
+    function onTaskChange(
+        event:
+            | React.ChangeEvent<HTMLSelectElement>
+            | React.ChangeEvent<HTMLTextAreaElement>,
     ): void {
-        setTitle(event.target.value);
-    }
+        const { name, value } = event.target;
 
-    function onDescriptionChange(
-        event: React.ChangeEvent<HTMLTextAreaElement>,
-    ): void {
-        setDescription(event.target.value);
+        setCurrentTask({
+            ...currentTask,
+            [name]: value,
+        });
     }
 
     function onSaveClick(): void {
+        if (!task.id) {
+            createTask(
+                currentTask.title,
+                currentTask.description,
+                currentTask.status,
+            );
+        } else {
+            updateTask(
+                task.id,
+                currentTask.title,
+                currentTask.description,
+                currentTask.status,
+            );
+        }
+
         setShowTaskForm(false);
-        saveTask(task.id, title, description, status);
     }
 
     function onDeleteTaskClick(): void {
@@ -61,24 +79,27 @@ export function TaskForm({
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
                 <select
                     className="text-3xl m-1"
-                    value={status}
-                    onChange={(e) => onChangeStatus(e)}
+                    name={ControlNames.Status}
+                    value={currentTask.status}
+                    onChange={(e) => onTaskChange(e)}
                 >
                     {Object.keys(TaskStates).map((state, index) => (
-                        <option key={index} value={state}>
-                            {TaskHelper.getTaskStateLabel(index)}
+                        <option key={index} value={index}>
+                            {TaskStateLabels[Object.values(TaskStates)[index]]}
                         </option>
                     ))}
                 </select>
                 <textarea
                     className="h-24 border-solid border-2 border-yellow-200 rounded m-1 p-1"
-                    value={title}
-                    onChange={(e) => onTitleChange(e)}
+                    name={ControlNames.Title}
+                    value={currentTask.title}
+                    onChange={(e) => onTaskChange(e)}
                 ></textarea>
                 <textarea
                     className="h-full border-solid border-2 border-yellow-200 rounded m-1 p-1"
-                    value={description}
-                    onChange={(e) => onDescriptionChange(e)}
+                    name={ControlNames.Description}
+                    value={currentTask.description}
+                    onChange={(e) => onTaskChange(e)}
                 ></textarea>
                 <div className="flex justify-center my-5 mx-3 space-x-7">
                     <button

@@ -23,6 +23,7 @@ export const Simple: Story = {
     args: {
         taskList: taskList,
         deleteTask: () => {},
-        saveTask: () => {},
+        createTask: () => {},
+        updateTask: () => {},
     },
 };

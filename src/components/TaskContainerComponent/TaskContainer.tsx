@@ -8,35 +8,40 @@ export function TaskContainer(): JSX.Element {
         JSON.parse(JSON.stringify(mockedTasks)) as Task[],
     );
 
-    function saveTask(
+    function createTask(
+        title: string,
+        description: string,
+        status: TaskStates,
+    ): void {
+        // Find new unique id.
+        let id: number = taskList.length + 1;
+        while (taskList.find((f) => f.id === id.toString())) {
+            id++;
+        }
+
+        setTaskList([
+            ...taskList.map((task) => ({ ...task })),
+            {
+                id: id.toString(),
+                title,
+                description,
+                status,
+            },
+        ]);
+    }
+
+    function updateTask(
         id: string,
         title: string,
         description: string,
         status: TaskStates,
     ): void {
         const newTaskList = [...taskList].map((task) => ({ ...task }));
+        const index = newTaskList.findIndex((f) => f.id === id);
 
-        if (!id) {
-            // Find new unique id.
-            let id: number = newTaskList.length + 1;
-            while (newTaskList.find((f) => f.id === id.toString())) {
-                id++;
-            }
-
-            const newTask: Task = {
-                id: id.toString(),
-                title,
-                description,
-                status,
-            };
-            newTaskList.push(newTask);
-        } else {
-            const index = newTaskList.findIndex((f) => f.id === id);
-
-            newTaskList[index].title = title;
-            newTaskList[index].description = description;
-            newTaskList[index].status = status;
-        }
+        newTaskList[index].title = title;
+        newTaskList[index].description = description;
+        newTaskList[index].status = status;
 
         setTaskList(newTaskList);
     }
@@ -50,7 +55,8 @@ export function TaskContainer(): JSX.Element {
         <div className="flex">
             <TaskList
                 taskList={taskList}
-                saveTask={saveTask}
+                createTask={createTask}
+                updateTask={updateTask}
                 deleteTask={deleteTask}
             />
         </div>

@@ -26,23 +26,16 @@ export function TaskList({
     deleteTask,
 }: TaskListPanelProps): JSX.Element {
     const [showTaskForm, setShowTaskForm] = useState(false);
-    const [selectedTask, setSelectedTask] = useState<Task>();
+    const [selectedTask, setSelectedTask] = useState<Task | null>();
 
-    function openTaskDetails(id: string): void {
+    function onTaskCardClick(id: string): void {
         const task = taskList.find((task) => task.id === id)!;
         setSelectedTask(task);
         setShowTaskForm(true);
     }
 
     function onCreateTaskClick(): void {
-        const newTask: Task = {
-            id: '',
-            title: 'Title',
-            description: 'Description',
-            status: TaskStates.NEW,
-        };
-
-        setSelectedTask(newTask);
+        setSelectedTask(null);
         setShowTaskForm(true);
     }
 
@@ -62,7 +55,7 @@ export function TaskList({
                         <TaskCardMemo
                             key={index}
                             task={task}
-                            onClick={openTaskDetails}
+                            onClick={onTaskCardClick}
                         />
                     ))}
                 </div>

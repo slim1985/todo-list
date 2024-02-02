@@ -8,7 +8,7 @@ enum ControlNames {
 }
 
 export interface TaskFormProps {
-    task: Task;
+    task: Task | null;
     setShowTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
     createTask: (
         title: string,
@@ -31,10 +31,11 @@ export function TaskForm({
     updateTask,
     deleteTask,
 }: TaskFormProps): JSX.Element {
-    const [currentTask, setCurrentTask] = React.useState({
-        status: task.status,
-        title: task.title,
-        description: task.description,
+    const [currentTask, setCurrentTask] = React.useState<Task>({
+        id: task?.id ?? '',
+        status: task?.status ?? TaskStates.NEW,
+        title: task?.title ?? 'Title',
+        description: task?.description ?? 'Description',
     });
 
     function onTaskChange(
@@ -51,7 +52,7 @@ export function TaskForm({
     }
 
     function onSaveClick(): void {
-        if (!task.id) {
+        if (!currentTask.id) {
             createTask(
                 currentTask.title,
                 currentTask.description,
@@ -59,7 +60,7 @@ export function TaskForm({
             );
         } else {
             updateTask(
-                task.id,
+                currentTask.id,
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
@@ -70,7 +71,7 @@ export function TaskForm({
     }
 
     function onDeleteTaskClick(): void {
-        deleteTask(task.id);
+        deleteTask(currentTask.id);
         setShowTaskForm(false);
     }
 

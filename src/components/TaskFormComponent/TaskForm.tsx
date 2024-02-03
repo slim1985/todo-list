@@ -9,7 +9,7 @@ enum ControlNames {
 
 export interface TaskFormProps {
     task: Task | null;
-    setShowTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
+    hideTaskForm: () => void;
     createTask: (
         title: string,
         description: string,
@@ -26,7 +26,7 @@ export interface TaskFormProps {
 
 export function TaskForm({
     task,
-    setShowTaskForm,
+    hideTaskForm,
     createTask,
     updateTask,
     deleteTask,
@@ -67,12 +67,12 @@ export function TaskForm({
             );
         }
 
-        setShowTaskForm(false);
+        hideTaskForm();
     }
 
     function onDeleteTaskClick(): void {
         deleteTask(currentTask.id);
-        setShowTaskForm(false);
+        hideTaskForm();
     }
 
     return (
@@ -110,7 +110,7 @@ export function TaskForm({
                         Save
                     </button>
                     <button
-                        onClick={() => setShowTaskForm(false)}
+                        onClick={() => hideTaskForm()}
                         className="size-20 p-1 bg-yellow-300 rounded-md"
                     >
                         Cancel

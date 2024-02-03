@@ -1,74 +1,30 @@
-import { useState } from 'react';
-import { Task, TaskStates } from '../../types/task';
+import { Task } from '../../types/task';
 import { TaskCardMemo } from '../TaskCardComponent/TaskCard';
-import { TaskForm } from '../TaskFormComponent/TaskForm';
 
 export interface TaskListPanelProps {
     taskList: Task[];
-    createTask: (
-        title: string,
-        description: string,
-        status: TaskStates,
-    ) => void;
-    updateTask: (
-        id: string,
-        title: string,
-        description: string,
-        status: TaskStates,
-    ) => void;
-    deleteTask: (taskId: string) => void;
+    openTask: (taskId: string | null) => void;
 }
 
 export function TaskList({
     taskList,
-    createTask,
-    updateTask,
-    deleteTask,
+    openTask,
 }: TaskListPanelProps): JSX.Element {
-    const [showTaskForm, setShowTaskForm] = useState(false);
-    const [selectedTask, setSelectedTask] = useState<Task | null>();
-
-    function onTaskCardClick(id: string): void {
-        const task = taskList.find((task) => task.id === id)!;
-        setSelectedTask(task);
-        setShowTaskForm(true);
-    }
-
-    function onCreateTaskClick(): void {
-        setSelectedTask(null);
-        setShowTaskForm(true);
-    }
-
     return (
-        <>
-            <div>
-                <div className="flex justify-end sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2">
-                    <button
-                        onClick={() => onCreateTaskClick()}
-                        className="size-20 my-2 mr-2 p-1 bg-gray-300 rounded-md"
-                    >
-                        Create
-                    </button>
-                </div>
-                <div className="flex flex-wrap justify-center mt-3">
-                    {taskList.map((task: Task, index: number) => (
-                        <TaskCardMemo
-                            key={index}
-                            task={task}
-                            onClick={onTaskCardClick}
-                        />
-                    ))}
-                </div>
+        <div>
+            <div className="flex justify-end sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2">
+                <button
+                    onClick={() => openTask(null)}
+                    className="size-20 my-2 mr-2 p-1 bg-gray-300 rounded-md"
+                >
+                    Create
+                </button>
             </div>
-            {showTaskForm && (
-                <TaskForm
-                    task={selectedTask!}
-                    setShowTaskForm={setShowTaskForm}
-                    createTask={createTask}
-                    updateTask={updateTask}
-                    deleteTask={deleteTask}
-                />
-            )}
-        </>
+            <div className="flex flex-wrap justify-center mt-3">
+                {taskList.map((task: Task, index: number) => (
+                    <TaskCardMemo key={index} task={task} onClick={openTask} />
+                ))}
+            </div>
+        </div>
     );
 }

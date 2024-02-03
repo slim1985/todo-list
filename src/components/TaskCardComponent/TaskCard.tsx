@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import isEqual from 'lodash.isequal';
 import { Task, TaskStateLabels, TaskStateColors } from '../../types/task';
 
 export interface TaskCardProps {
@@ -31,5 +30,14 @@ export function TaskCard({
 }
 
 export const TaskCardMemo = memo(TaskCard, (prevProps, nextProps) => {
-    return isEqual(prevProps.task, nextProps.task);
+    if (
+        prevProps.task.id === nextProps.task.id &&
+        prevProps.task.status === nextProps.task.status &&
+        prevProps.task.title === nextProps.task.title &&
+        prevProps.task.description === nextProps.task.description
+    ) {
+        return true;
+    }
+
+    return false;
 });

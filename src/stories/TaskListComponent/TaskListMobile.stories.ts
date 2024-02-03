@@ -22,8 +22,5 @@ export const Simple: Story = {
     name: 'TaskListPanel',
     args: {
         taskList: taskList,
-        deleteTask: () => {},
-        createTask: () => {},
-        updateTask: () => {},
     },
 };

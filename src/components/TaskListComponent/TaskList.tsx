@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Task } from '../../types/task';
 import { TaskCardMemo } from '../TaskCardComponent/TaskCard';
 
@@ -28,3 +29,7 @@ export function TaskList({
         </div>
     );
 }
+
+export const TaskListMemo = memo(TaskList, (prevProps, nextProps) => {
+    return prevProps.taskList === nextProps.taskList;
+});

@@ -1,4 +1,4 @@
-import { TaskList } from '../TaskListComponent/TaskList';
+import { TaskListMemo } from '../TaskListComponent/TaskList';
 import { TaskForm } from '../TaskFormComponent/TaskForm';
 import { useTasks } from '../../hooks/useTasks';
 
@@ -16,7 +16,7 @@ export function TaskContainer(): JSX.Element {
 
     return (
         <div className="flex">
-            <TaskList taskList={taskList} openTask={openTask} />
+            <TaskListMemo taskList={taskList} openTask={openTask} />
             {showTaskForm && (
                 <TaskForm
                     task={selectedTask!}

@@ -1,0 +1,74 @@
+[
+    {
+        "id": "1",
+        "title": "Create project using React + Typescript + TalewindCSS",
+        "description": "Need to create project using React + Typescript + TalewindCSS and configure engineering processes. Also, use Storybook for UI components development.",
+        "status": "0"
+    },
+    {
+        "id": "2",
+        "title": "Configure engineering process",
+        "description": "task 2 description",
+        "status": "1"
+    },
+    {
+        "id": "3",
+        "title": "Configure continiouse delivery",
+        "description": "task 3 description",
+        "status": "2"
+    },
+    {
+        "id": "4",
+        "title": "task 4",
+        "description": "task 4 description",
+        "status": "0"
+    },
+    {
+        "id": "5",
+        "title": "task 5",
+        "description": "task 5 description",
+        "status": "0"
+    },
+    {
+        "id": "6",
+        "title": "task 6",
+        "description": "task 6 description",
+        "status": "1"
+    },
+    {
+        "id": "7",
+        "title": "task 7",
+        "description": "task 7 description",
+        "status": "2"
+    },
+    {
+        "id": "8",
+        "title": "task 8",
+        "description": "task 8 description",
+        "status": "0"
+    },
+    {
+        "id": "9",
+        "title": "task 9",
+        "description": "task 1 description",
+        "status": "0"
+    },
+    {
+        "id": "10",
+        "title": "task 10",
+        "description": "task 10 description",
+        "status": "1"
+    },
+    {
+        "id": "11",
+        "title": "task 11",
+        "description": "task 11 description",
+        "status": "2"
+    },
+    {
+        "id": "12",
+        "title": "task 12",
+        "description": "task 12 description",
+        "status": "0"
+    }
+]

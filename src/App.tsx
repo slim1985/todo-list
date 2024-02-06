@@ -1,5 +1,6 @@
-import React from 'react';
+import { TaskContainer } from './components/TaskContainerComponent/TaskContainer';
+import './index.css';
 
 export default function App(): JSX.Element {
-    return <h1>hello react</h1>;
+    return <TaskContainer />;
 }

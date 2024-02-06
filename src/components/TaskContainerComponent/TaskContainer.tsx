@@ -19,7 +19,7 @@ export function TaskContainer(): JSX.Element {
             <TaskListMemo taskList={taskList} openTask={openTask} />
             {showTaskForm && (
                 <TaskForm
-                    task={selectedTask!}
+                    task={selectedTask}
                     hideTaskForm={hideTaskForm}
                     createTask={createTask}
                     updateTask={updateTask}

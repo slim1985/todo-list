@@ -1,21 +1,30 @@
+import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createTaskSlice } from './createTaskSlice';
 import { Task } from '../types/task';
 import mockedTasks from '../mocks/data-mock.json';
+import { RootState } from './store';
 
 const sleep = (ms: number): Promise<void> =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
 export interface TaskState {
-    tasks: Task[];
     status: StateStatus;
 }
 
 const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
 
-const initialState: TaskState = {
-    tasks: tasks,
+const defaultState: TaskState = {
     status: 'idle',
 };
+
+const taskAdapter = createEntityAdapter<Task>({
+    sortComparer: (a, b) => a.id.localeCompare(b.id),
+});
+
+const initialState = taskAdapter.addMany(
+    taskAdapter.getInitialState(defaultState),
+    tasks,
+);
 
 export const taskSlice = createTaskSlice({
     name: 'tasks',
@@ -32,7 +41,7 @@ export const taskSlice = createTaskSlice({
                 },
                 fulfilled: (state, action) => {
                     state.status = 'idle';
-                    state.tasks.push(action.payload);
+                    taskAdapter.addOne(state, action.payload);
                 },
                 rejected: (state) => {
                     state.status = 'failed';
@@ -51,14 +60,10 @@ export const taskSlice = createTaskSlice({
                 },
                 fulfilled: (state, action) => {
                     state.status = 'idle';
-                    const task = state.tasks.find(
-                        (t) => t.id === action.payload.id,
-                    );
-                    if (task) {
-                        task.title = action.payload.title;
-                        task.description = action.payload.description;
-                        task.status = action.payload.status;
-                    }
+                    taskAdapter.updateOne(state, {
+                        id: action.payload.id,
+                        changes: action.payload,
+                    });
                 },
                 rejected: (state) => {
                     state.status = 'failed';
@@ -77,9 +82,7 @@ export const taskSlice = createTaskSlice({
                 },
                 fulfilled: (state, action) => {
                     state.status = 'idle';
-                    state.tasks = state.tasks.filter(
-                        (t) => t.id !== action.payload,
-                    );
+                    taskAdapter.removeOne(state, action.payload);
                 },
                 rejected: (state) => {
                     state.status = 'failed';
@@ -92,4 +95,6 @@ export const taskSlice = createTaskSlice({
 export type StateStatus = 'idle' | 'loading' | 'failed';
 export const { createTaskAsync, updateTaskAsync, deleteTaskAsync } =
     taskSlice.actions;
+export const { selectAll: selectAllTasks } =
+    taskAdapter.getSelectors<RootState>((state) => state.taskState);
 export default taskSlice.reducer;

@@ -7,8 +7,9 @@ import {
     updateTaskAsync,
     deleteTaskAsync,
     StateStatus,
+    selectAllTasks,
 } from '../store/taskSlice';
-import { RootState } from '../store/store';
+import { RootState, store } from '../store/store';
 
 export function useTasks(): [
     taskList: Task[],
@@ -20,27 +21,25 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ) => void,
     updateTask: (
         id: string,
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ) => void,
-    deleteTask: (taskId: string, hideForm: boolean) => void,
+    deleteTask: (taskId: string, onActionSuccess: () => void) => void,
     openTask: (taskId: string | null) => void,
 ] {
     const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
     const dispatch = useTaskDispatch();
-    const taskList = useTaskSelector(
-        (state: RootState) => state.taskState.tasks,
-    );
     const stateStatus = useTaskSelector(
         (state: RootState) => state.taskState.status,
     );
+    const taskList = selectAllTasks(store.getState());
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
@@ -50,7 +49,7 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ): void {
         // Find new unique id.
         let id: number = taskList.length + 1;
@@ -58,12 +57,12 @@ export function useTasks(): [
             id++;
         }
 
-        const result = dispatch(
+        const promise = dispatch(
             createTaskAsync({ id: id.toString(), title, description, status }),
         );
-        result.then((action) => {
-            if (hideForm && action.meta.requestStatus === 'fulfilled') {
-                setShowTaskForm(false);
+        promise.then((action) => {
+            if (action.meta.requestStatus === 'fulfilled') {
+                onActionSuccess();
             }
         });
     }
@@ -73,23 +72,23 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ): void {
-        const result = dispatch(
+        const promise = dispatch(
             updateTaskAsync({ id, title, description, status }),
         );
-        result.then((action) => {
-            if (hideForm && action.meta.requestStatus === 'fulfilled') {
-                setShowTaskForm(false);
+        promise.then((action) => {
+            if (action.meta.requestStatus === 'fulfilled') {
+                onActionSuccess();
             }
         });
     }
 
-    function deleteTask(taskId: string, hideForm: boolean): void {
-        const result = dispatch(deleteTaskAsync(taskId));
-        result.then((action) => {
-            if (hideForm && action.meta.requestStatus === 'fulfilled') {
-                setShowTaskForm(false);
+    function deleteTask(taskId: string, onActionSuccess: () => void): void {
+        const promise = dispatch(deleteTaskAsync(taskId));
+        promise.then((action) => {
+            if (action.meta.requestStatus === 'fulfilled') {
+                onActionSuccess();
             }
         });
     }

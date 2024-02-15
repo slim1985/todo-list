@@ -17,16 +17,16 @@ export interface TaskFormProps {
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ) => void;
     updateTask: (
         id: string,
         title: string,
         description: string,
         status: TaskStates,
-        hideForm: boolean,
+        onActionSuccess: () => void,
     ) => void;
-    deleteTask: (taskId: string, hideForm: boolean) => void;
+    deleteTask: (taskId: string, onActionSuccess: () => void) => void;
 }
 
 export function TaskForm({
@@ -63,7 +63,7 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
-                true,
+                () => hideTaskForm(),
             );
         } else {
             updateTask(
@@ -71,13 +71,13 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
-                true,
+                () => hideTaskForm(),
             );
         }
     }
 
     function onDeleteTaskClick(): void {
-        deleteTask(currentTask.id, true);
+        deleteTask(currentTask.id, () => hideTaskForm());
     }
 
     return (

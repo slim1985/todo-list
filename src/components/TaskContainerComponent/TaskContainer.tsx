@@ -5,6 +5,7 @@ import { useTasks } from '../../hooks/useTasks';
 export function TaskContainer(): JSX.Element {
     const [
         taskList,
+        stateStatus,
         showTaskForm,
         selectedTask,
         hideTaskForm,
@@ -20,6 +21,7 @@ export function TaskContainer(): JSX.Element {
             {showTaskForm && (
                 <TaskForm
                     task={selectedTask}
+                    stateStatus={stateStatus}
                     hideTaskForm={hideTaskForm}
                     createTask={createTask}
                     updateTask={updateTask}

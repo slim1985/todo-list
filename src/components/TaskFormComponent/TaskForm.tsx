@@ -1,5 +1,7 @@
 import React from 'react';
+import CircularProgress from '@mui/joy/CircularProgress';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
+import { StateStatus } from '../../store/taskSlice';
 
 enum ControlNames {
     Title = 'title',
@@ -9,23 +11,27 @@ enum ControlNames {
 
 export interface TaskFormProps {
     task: Task | null;
+    stateStatus: StateStatus;
     hideTaskForm: () => void;
     createTask: (
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ) => void;
     updateTask: (
         id: string,
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ) => void;
-    deleteTask: (taskId: string) => void;
+    deleteTask: (taskId: string, hideForm: boolean) => void;
 }
 
 export function TaskForm({
     task,
+    stateStatus,
     hideTaskForm,
     createTask,
     updateTask,
@@ -57,6 +63,7 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
+                true,
             );
         } else {
             updateTask(
@@ -64,20 +71,33 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
+                true,
             );
         }
-
-        hideTaskForm();
     }
 
     function onDeleteTaskClick(): void {
-        deleteTask(currentTask.id);
-        hideTaskForm();
+        deleteTask(currentTask.id, true);
     }
 
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
+            {stateStatus === 'loading' && (
+                <div className="flex justify-center items-center z-50 fixed h-full w-full overflow-hidden bg-black/[.5]">
+                    <CircularProgress
+                        color="primary"
+                        size="lg"
+                        variant="soft"
+                    />
+                </div>
+            )}
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
+                {stateStatus === 'failed' && (
+                    <div className="text-center text-3xl m-1 text-red-500">
+                        Failed to save task. Check internet connection and try
+                        it again.
+                    </div>
+                )}
                 <select
                     className="text-3xl m-1"
                     name={ControlNames.Status}

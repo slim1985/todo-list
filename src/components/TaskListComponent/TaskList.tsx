@@ -22,8 +22,12 @@ export function TaskList({
                 </button>
             </div>
             <div className="flex flex-wrap justify-center mt-3">
-                {taskList.map((task: Task, index: number) => (
-                    <TaskCardMemo key={index} task={task} onClick={openTask} />
+                {taskList.map((task: Task) => (
+                    <TaskCardMemo
+                        key={task.id}
+                        task={task}
+                        onClick={openTask}
+                    />
                 ))}
             </div>
         </div>

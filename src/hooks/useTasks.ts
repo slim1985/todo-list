@@ -1,9 +1,18 @@
 import { useState } from 'react';
-import mockedTasks from '../mocks/data-mock.json';
+import { useTaskSelector } from './useTaskSelector';
+import { useTaskDispatch } from './useTaskDispatch';
 import { Task, TaskStates } from '../types/task';
+import {
+    createTaskAsync,
+    updateTaskAsync,
+    deleteTaskAsync,
+    StateStatus,
+} from '../store/taskSlice';
+import { RootState } from '../store/store';
 
 export function useTasks(): [
     taskList: Task[],
+    asyncStatus: StateStatus,
     showTaskForm: boolean,
     selectedTask: Task | null,
     hideTaskForm: () => void,
@@ -11,21 +20,27 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ) => void,
     updateTask: (
         id: string,
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ) => void,
-    deleteTask: (taskId: string) => void,
+    deleteTask: (taskId: string, hideForm: boolean) => void,
     openTask: (taskId: string | null) => void,
 ] {
-    const [taskList, setTaskList] = useState<Task[]>(
-        JSON.parse(JSON.stringify(mockedTasks)) as Task[],
-    );
-    const [showTaskForm, setShowTaskForm] = useState(false);
+    const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const dispatch = useTaskDispatch();
+    const taskList = useTaskSelector(
+        (state: RootState) => state.taskState.tasks,
+    );
+    const stateStatus = useTaskSelector(
+        (state: RootState) => state.taskState.status,
+    );
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
@@ -35,6 +50,7 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ): void {
         // Find new unique id.
         let id: number = taskList.length + 1;
@@ -42,15 +58,14 @@ export function useTasks(): [
             id++;
         }
 
-        setTaskList([
-            ...taskList.map((task) => ({ ...task })),
-            {
-                id: id.toString(),
-                title,
-                description,
-                status,
-            },
-        ]);
+        const result = dispatch(
+            createTaskAsync({ id: id.toString(), title, description, status }),
+        );
+        result.then((action) => {
+            if (hideForm && action.meta.requestStatus === 'fulfilled') {
+                setShowTaskForm(false);
+            }
+        });
     }
 
     function updateTask(
@@ -58,20 +73,25 @@ export function useTasks(): [
         title: string,
         description: string,
         status: TaskStates,
+        hideForm: boolean,
     ): void {
-        const newTaskList = [...taskList].map((task) => ({ ...task }));
-        const index = newTaskList.findIndex((f) => f.id === id);
-
-        newTaskList[index].title = title;
-        newTaskList[index].description = description;
-        newTaskList[index].status = status;
-
-        setTaskList(newTaskList);
+        const result = dispatch(
+            updateTaskAsync({ id, title, description, status }),
+        );
+        result.then((action) => {
+            if (hideForm && action.meta.requestStatus === 'fulfilled') {
+                setShowTaskForm(false);
+            }
+        });
     }
 
-    function deleteTask(taskId: string): void {
-        const newTaskList = [...taskList];
-        setTaskList(newTaskList.filter((f) => f.id !== taskId));
+    function deleteTask(taskId: string, hideForm: boolean): void {
+        const result = dispatch(deleteTaskAsync(taskId));
+        result.then((action) => {
+            if (hideForm && action.meta.requestStatus === 'fulfilled') {
+                setShowTaskForm(false);
+            }
+        });
     }
 
     function openTask(taskId: string | null): void {
@@ -82,6 +102,7 @@ export function useTasks(): [
 
     return [
         taskList,
+        stateStatus,
         showTaskForm,
         selectedTask,
         hideTaskForm,

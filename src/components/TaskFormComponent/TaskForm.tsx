@@ -1,5 +1,5 @@
 import React from 'react';
-import CircularProgress from '@mui/joy/CircularProgress';
+import { Spinner } from '../SpinnerComponent/Spinner';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
 import { StateStatus } from '../../store/stateStatus';
 
@@ -78,15 +78,7 @@ export function TaskForm({
 
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
-            {stateStatus === StateStatus.LOADING && (
-                <div className="flex justify-center items-center z-50 fixed h-full w-full overflow-hidden bg-black/[.5]">
-                    <CircularProgress
-                        color="primary"
-                        size="lg"
-                        variant="soft"
-                    />
-                </div>
-            )}
+            {stateStatus === StateStatus.LOADING && <Spinner />}
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
                 {stateStatus === StateStatus.FAILED && (
                     <div className="text-center text-3xl m-1 text-red-500">

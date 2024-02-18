@@ -1,11 +1,10 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createTaskSlice } from './createTaskSlice';
+import { StateStatus } from './stateStatus';
 import { Task } from '../types/task';
 import mockedTasks from '../mocks/data-mock.json';
 import { RootState } from './store';
-
-const sleep = (ms: number): Promise<void> =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+import { TaskService } from '../services/taskService';
 
 export interface TaskState {
     status: StateStatus;
@@ -14,7 +13,7 @@ export interface TaskState {
 const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
 
 const defaultState: TaskState = {
-    status: 'idle',
+    status: StateStatus.IDLE,
 };
 
 const taskAdapter = createEntityAdapter<Task>({
@@ -26,73 +25,71 @@ const initialState = taskAdapter.addMany(
     tasks,
 );
 
+const taskService = TaskService.getInstance();
+
 export const taskSlice = createTaskSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: (create) => ({
         createTaskAsync: create.asyncThunk(
             async (task: Task) => {
-                await sleep(3000);
-                return task;
+                return await taskService.createTask(task);
             },
             {
                 pending: (state) => {
-                    state.status = 'loading';
+                    state.status = StateStatus.LOADING;
                 },
                 fulfilled: (state, action) => {
-                    state.status = 'idle';
+                    state.status = StateStatus.IDLE;
                     taskAdapter.addOne(state, action.payload);
                 },
                 rejected: (state) => {
-                    state.status = 'failed';
+                    state.status = StateStatus.FAILED;
                 },
             },
         ),
 
         updateTaskAsync: create.asyncThunk(
             async (task: Task) => {
-                await sleep(3000);
-                return task;
+                return await taskService.updateTask(task);
             },
             {
                 pending: (state) => {
-                    state.status = 'loading';
+                    state.status = StateStatus.LOADING;
                 },
                 fulfilled: (state, action) => {
-                    state.status = 'idle';
+                    state.status = StateStatus.IDLE;
                     taskAdapter.updateOne(state, {
                         id: action.payload.id,
                         changes: action.payload,
                     });
                 },
                 rejected: (state) => {
-                    state.status = 'failed';
+                    state.status = StateStatus.FAILED;
                 },
             },
         ),
 
         deleteTaskAsync: create.asyncThunk(
             async (taskId: string) => {
-                await sleep(3000);
-                return taskId;
+                return await taskService.deleteTask(taskId);
             },
             {
                 pending: (state) => {
-                    state.status = 'loading';
+                    state.status = StateStatus.LOADING;
                 },
                 fulfilled: (state, action) => {
-                    state.status = 'idle';
+                    state.status = StateStatus.IDLE;
                     taskAdapter.removeOne(state, action.payload);
                 },
                 rejected: (state) => {
-                    state.status = 'failed';
+                    state.status = StateStatus.FAILED;
                 },
             },
         ),
     }),
 });
 
-export type StateStatus = 'idle' | 'loading' | 'failed';
 export const { createTaskAsync, updateTaskAsync, deleteTaskAsync } =
     taskSlice.actions;
 export const { selectAll: selectAllTasks } =

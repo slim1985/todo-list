@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@mui/joy/CircularProgress';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
-import { StateStatus } from '../../store/taskSlice';
+import { StateStatus } from '../../store/stateStatus';
 
 enum ControlNames {
     Title = 'title',
@@ -17,16 +17,14 @@ export interface TaskFormProps {
         title: string,
         description: string,
         status: TaskStates,
-        onActionSuccess: () => void,
     ) => void;
     updateTask: (
         id: string,
         title: string,
         description: string,
         status: TaskStates,
-        onActionSuccess: () => void,
     ) => void;
-    deleteTask: (taskId: string, onActionSuccess: () => void) => void;
+    deleteTask: (taskId: string) => void;
 }
 
 export function TaskForm({
@@ -63,7 +61,6 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
-                () => hideTaskForm(),
             );
         } else {
             updateTask(
@@ -71,18 +68,17 @@ export function TaskForm({
                 currentTask.title,
                 currentTask.description,
                 currentTask.status,
-                () => hideTaskForm(),
             );
         }
     }
 
     function onDeleteTaskClick(): void {
-        deleteTask(currentTask.id, () => hideTaskForm());
+        deleteTask(currentTask.id);
     }
 
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
-            {stateStatus === 'loading' && (
+            {stateStatus === StateStatus.LOADING && (
                 <div className="flex justify-center items-center z-50 fixed h-full w-full overflow-hidden bg-black/[.5]">
                     <CircularProgress
                         color="primary"
@@ -92,7 +88,7 @@ export function TaskForm({
                 </div>
             )}
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
-                {stateStatus === 'failed' && (
+                {stateStatus === StateStatus.FAILED && (
                     <div className="text-center text-3xl m-1 text-red-500">
                         Failed to save task. Check internet connection and try
                         it again.

@@ -2,7 +2,6 @@ import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createTaskSlice } from './createTaskSlice';
 import { StateStatus } from './stateStatus';
 import { Task } from '../types/task';
-import mockedTasks from '../mocks/data-mock.json';
 import { RootState } from './store';
 import { TaskService } from '../services/taskService';
 
@@ -10,19 +9,17 @@ export interface TaskState {
     status: StateStatus;
 }
 
-const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
-
 const defaultState: TaskState = {
     status: StateStatus.IDLE,
 };
 
 const taskAdapter = createEntityAdapter<Task>({
-    sortComparer: (a, b) => a.id.localeCompare(b.id),
+    sortComparer: (a, b) => a.title.localeCompare(b.title),
 });
 
 const initialState = taskAdapter.addMany(
     taskAdapter.getInitialState(defaultState),
-    tasks,
+    [],
 );
 
 const taskService = TaskService.getInstance();
@@ -31,6 +28,24 @@ export const taskSlice = createTaskSlice({
     name: 'tasks',
     initialState: initialState,
     reducers: (create) => ({
+        getTasksAsync: create.asyncThunk(
+            async () => {
+                return await taskService.getTasks();
+            },
+            {
+                pending: (state) => {
+                    state.status = StateStatus.LOADING;
+                },
+                fulfilled: (state, action) => {
+                    state.status = StateStatus.IDLE;
+                    taskAdapter.addMany(state, action.payload);
+                },
+                rejected: (state) => {
+                    state.status = StateStatus.FAILED;
+                },
+            },
+        ),
+
         createTaskAsync: create.asyncThunk(
             async (task: Task) => {
                 return await taskService.createTask(task);
@@ -90,8 +105,12 @@ export const taskSlice = createTaskSlice({
     }),
 });
 
-export const { createTaskAsync, updateTaskAsync, deleteTaskAsync } =
-    taskSlice.actions;
+export const {
+    getTasksAsync,
+    createTaskAsync,
+    updateTaskAsync,
+    deleteTaskAsync,
+} = taskSlice.actions;
 export const { selectAll: selectAllTasks } =
     taskAdapter.getSelectors<RootState>((state) => state.taskState);
 export default taskSlice.reducer;

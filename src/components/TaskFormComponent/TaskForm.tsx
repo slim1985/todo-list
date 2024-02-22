@@ -42,6 +42,9 @@ export function TaskForm({
         description: task?.description ?? 'Description',
     });
 
+    const isLoading = stateStatus === StateStatus.LOADING;
+    const isFailed = stateStatus === StateStatus.FAILED;
+
     function onTaskChange(
         event:
             | React.ChangeEvent<HTMLSelectElement>
@@ -78,9 +81,9 @@ export function TaskForm({
 
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
-            {stateStatus === StateStatus.LOADING && <Spinner />}
+            {isLoading && <Spinner />}
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
-                {stateStatus === StateStatus.FAILED && (
+                {isFailed && (
                     <div className="text-center text-3xl m-1 text-red-500">
                         Failed to save task. Check internet connection and try
                         it again.

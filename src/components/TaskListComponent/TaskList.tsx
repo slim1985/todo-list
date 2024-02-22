@@ -13,7 +13,7 @@ export function TaskList({
 }: TaskListPanelProps): JSX.Element {
     return (
         <div>
-            <div className="flex justify-end sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2">
+            <div className="flex w-screen justify-end sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2">
                 <button
                     onClick={() => openTask(null)}
                     className="size-20 my-2 mr-2 p-1 bg-gray-300 rounded-md"

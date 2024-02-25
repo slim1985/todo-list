@@ -1,9 +1,9 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createTaskSlice } from './createTaskSlice';
-import { StateStatus } from './stateStatus';
+import { StateStatus } from '../types/stateStatus';
 import { Task } from '../types/task';
 import { RootState } from './store';
-import { TaskService } from '../services/taskService';
+import { taskService } from '../services/taskService';
 
 export interface TaskState {
     status: StateStatus;
@@ -21,8 +21,6 @@ const initialState = taskAdapter.addMany(
     taskAdapter.getInitialState(defaultState),
     [],
 );
-
-const taskService = TaskService.getInstance();
 
 export const taskSlice = createTaskSlice({
     name: 'tasks',

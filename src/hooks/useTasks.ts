@@ -3,12 +3,13 @@ import { useTaskSelector } from '../store/useTaskSelector';
 import { useTaskDispatch } from '../store/useTaskDispatch';
 import { Task, TaskStates } from '../types/task';
 import {
+    getTasksAsync,
     createTaskAsync,
     updateTaskAsync,
     deleteTaskAsync,
     selectAllTasks,
 } from '../store/taskSlice';
-import { StateStatus } from '../store/stateStatus';
+import { StateStatus } from '../types/stateStatus';
 import { RootState, store } from '../store/store';
 
 export function useTasks(): [
@@ -38,11 +39,16 @@ export function useTasks(): [
         (state: RootState) => state.taskState.status,
     );
     const taskList = selectAllTasks(store.getState());
+
     useEffect(() => {
         if (showTaskForm) {
             setShowTaskForm(false);
         }
     }, [taskList]);
+
+    useEffect(() => {
+        dispatch(getTasksAsync(null));
+    }, []);
 
     function hideTaskForm(): void {
         setShowTaskForm(false);

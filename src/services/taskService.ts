@@ -2,18 +2,6 @@ import { Task } from '../types/task';
 import mockedTasks from '../mocks/data-mock.json';
 
 export class TaskService {
-    private static instance: TaskService;
-
-    private constructor() {}
-
-    public static getInstance(): TaskService {
-        if (!TaskService.instance) {
-            TaskService.instance = new TaskService();
-        }
-
-        return TaskService.instance;
-    }
-
     public async getTasks(): Promise<Task[]> {
         const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
         return new Promise((resolve) => {
@@ -47,3 +35,5 @@ export class TaskService {
         });
     }
 }
+
+export const taskService = new TaskService();

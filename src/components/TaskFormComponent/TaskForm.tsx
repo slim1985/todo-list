@@ -1,7 +1,7 @@
 import React from 'react';
 import { Spinner } from '../SpinnerComponent/Spinner';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
-import { StateStatus } from '../../store/stateStatus';
+import { StateStatus } from '../../types/stateStatus';
 
 enum ControlNames {
     Title = 'title',

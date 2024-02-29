@@ -1,38 +1,21 @@
 import { Task } from '../types/task';
-import mockedTasks from '../mocks/data-mock.json';
+import { firebaseDb } from './firebaseDb';
 
 export class TaskService {
     public async getTasks(): Promise<Task[]> {
-        const tasks = JSON.parse(JSON.stringify(mockedTasks)) as Task[];
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(tasks);
-            }, 3000);
-        });
+        return await firebaseDb.getTasks();
     }
 
     public async createTask(task: Task): Promise<Task> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(task);
-            }, 3000);
-        });
+        return await firebaseDb.createTask(task);
     }
 
     public async updateTask(task: Task): Promise<Task> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(task);
-            }, 3000);
-        });
+        return await firebaseDb.updateTask(task);
     }
 
     public async deleteTask(taskId: string): Promise<string> {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(taskId);
-            }, 3000);
-        });
+        return await firebaseDb.deleteTaskAsync(taskId);
     }
 }
 

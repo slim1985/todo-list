@@ -109,6 +109,7 @@ export const {
     updateTaskAsync,
     deleteTaskAsync,
 } = taskSlice.actions;
+
 export const { selectAll: selectAllTasks } =
     taskAdapter.getSelectors<RootState>((state) => state.taskState);
 export default taskSlice.reducer;

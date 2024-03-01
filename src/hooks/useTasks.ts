@@ -1,9 +1,20 @@
-import { useState } from 'react';
-import mockedTasks from '../mocks/data-mock.json';
+import { useState, useEffect } from 'react';
+import { useTaskSelector } from '../store/useTaskSelector';
+import { useTaskDispatch } from '../store/useTaskDispatch';
 import { Task, TaskStates } from '../types/task';
+import {
+    getTasksAsync,
+    createTaskAsync,
+    updateTaskAsync,
+    deleteTaskAsync,
+    selectAllTasks,
+} from '../store/taskSlice';
+import { StateStatus } from '../types/stateStatus';
+import { RootState, store } from '../store/store';
 
 export function useTasks(): [
     taskList: Task[],
+    stateStatus: StateStatus,
     showTaskForm: boolean,
     selectedTask: Task | null,
     hideTaskForm: () => void,
@@ -21,11 +32,23 @@ export function useTasks(): [
     deleteTask: (taskId: string) => void,
     openTask: (taskId: string | null) => void,
 ] {
-    const [taskList, setTaskList] = useState<Task[]>(
-        JSON.parse(JSON.stringify(mockedTasks)) as Task[],
-    );
-    const [showTaskForm, setShowTaskForm] = useState(false);
+    const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const dispatch = useTaskDispatch();
+    const stateStatus = useTaskSelector(
+        (state: RootState) => state.taskState.status,
+    );
+    const taskList = selectAllTasks(store.getState());
+
+    useEffect(() => {
+        if (showTaskForm) {
+            setShowTaskForm(false);
+        }
+    }, [taskList]);
+
+    useEffect(() => {
+        dispatch(getTasksAsync(null));
+    }, []);
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
@@ -41,16 +64,9 @@ export function useTasks(): [
         while (taskList.find((f) => f.id === id.toString())) {
             id++;
         }
-
-        setTaskList([
-            ...taskList.map((task) => ({ ...task })),
-            {
-                id: id.toString(),
-                title,
-                description,
-                status,
-            },
-        ]);
+        dispatch(
+            createTaskAsync({ id: id.toString(), title, description, status }),
+        );
     }
 
     function updateTask(
@@ -59,19 +75,11 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        const newTaskList = [...taskList].map((task) => ({ ...task }));
-        const index = newTaskList.findIndex((f) => f.id === id);
-
-        newTaskList[index].title = title;
-        newTaskList[index].description = description;
-        newTaskList[index].status = status;
-
-        setTaskList(newTaskList);
+        dispatch(updateTaskAsync({ id, title, description, status }));
     }
 
     function deleteTask(taskId: string): void {
-        const newTaskList = [...taskList];
-        setTaskList(newTaskList.filter((f) => f.id !== taskId));
+        dispatch(deleteTaskAsync(taskId));
     }
 
     function openTask(taskId: string | null): void {
@@ -82,6 +90,7 @@ export function useTasks(): [
 
     return [
         taskList,
+        stateStatus,
         showTaskForm,
         selectedTask,
         hideTaskForm,

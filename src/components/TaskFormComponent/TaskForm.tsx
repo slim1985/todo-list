@@ -1,5 +1,7 @@
 import React from 'react';
+import { Spinner } from '../SpinnerComponent/Spinner';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
+import { StateStatus } from '../../types/stateStatus';
 
 enum ControlNames {
     Title = 'title',
@@ -9,6 +11,7 @@ enum ControlNames {
 
 export interface TaskFormProps {
     task: Task | null;
+    stateStatus: StateStatus;
     hideTaskForm: () => void;
     createTask: (
         title: string,
@@ -26,6 +29,7 @@ export interface TaskFormProps {
 
 export function TaskForm({
     task,
+    stateStatus,
     hideTaskForm,
     createTask,
     updateTask,
@@ -37,6 +41,9 @@ export function TaskForm({
         title: task?.title ?? 'Title',
         description: task?.description ?? 'Description',
     });
+
+    const isLoading = stateStatus === StateStatus.LOADING;
+    const isFailed = stateStatus === StateStatus.FAILED;
 
     function onTaskChange(
         event:
@@ -66,18 +73,22 @@ export function TaskForm({
                 currentTask.status,
             );
         }
-
-        hideTaskForm();
     }
 
     function onDeleteTaskClick(): void {
         deleteTask(currentTask.id);
-        hideTaskForm();
     }
 
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
+            {isLoading && <Spinner />}
             <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
+                {isFailed && (
+                    <div className="text-center text-3xl m-1 text-red-500">
+                        Failed to save task. Check internet connection and try
+                        it again.
+                    </div>
+                )}
                 <select
                     className="text-3xl m-1"
                     name={ControlNames.Status}

@@ -1,4 +1,10 @@
-import { Auth, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import {
+    Auth,
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signOut,
+} from 'firebase/auth';
 import { firebaseApp } from '../services/firebaseApp';
 
 export class AuthService {
@@ -16,10 +22,11 @@ export class AuthService {
             return;
         }
 
-        signInWithPopup(this.firebaseAuth, this.googleAuthProvider)
-            .catch((error) => {
+        signInWithPopup(this.firebaseAuth, this.googleAuthProvider).catch(
+            (error) => {
                 console.error(`Authentication error: ${error}`);
-            });
+            },
+        );
     }
 
     signOut(): void {
@@ -28,10 +35,9 @@ export class AuthService {
             return;
         }
 
-        signOut(this.firebaseAuth)
-            .catch((error) => {
-                console.error(`Sign-out error: ${error}`);
-            });
+        signOut(this.firebaseAuth).catch((error) => {
+            console.error(`Sign-out error: ${error}`);
+        });
     }
 }
 

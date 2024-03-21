@@ -24,18 +24,23 @@ export function TaskContainer({
     ] = useTasks();
 
     return (
-            <div className="flex">
-                <TaskListMemo taskList={taskList} userName={userName} signOut={signOut} openTask={openTask} />
-                {showTaskForm && (
-                    <TaskForm
-                        task={selectedTask}
-                        stateStatus={stateStatus}
-                        hideTaskForm={hideTaskForm}
-                        createTask={createTask}
-                        updateTask={updateTask}
-                        deleteTask={deleteTask}
-                    />
-                )}
-            </div>
-        );
+        <div className="flex">
+            <TaskListMemo
+                taskList={taskList}
+                userName={userName}
+                signOut={signOut}
+                openTask={openTask}
+            />
+            {showTaskForm && (
+                <TaskForm
+                    task={selectedTask}
+                    stateStatus={stateStatus}
+                    hideTaskForm={hideTaskForm}
+                    createTask={createTask}
+                    updateTask={updateTask}
+                    deleteTask={deleteTask}
+                />
+            )}
+        </div>
+    );
 }

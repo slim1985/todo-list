@@ -4,10 +4,10 @@ import { firebaseApp } from '../services/firebaseApp';
 import { authService } from '../services/authService';
 
 export function useAuth(): {
-    isAuthenticated: boolean,
-    userName: string,
-    authenticate: () => void,
-    signOut: () => void,
+    isAuthenticated: boolean;
+    userName: string;
+    authenticate: () => void;
+    signOut: () => void;
 } {
     const [userName, setUserName] = useState<string>('');
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);

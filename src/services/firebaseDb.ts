@@ -10,6 +10,7 @@ import {
     setDoc,
 } from 'firebase/firestore/lite';
 import { firebaseApp } from './firebaseApp';
+import { authService } from './authService';
 import { Task } from '../types/task';
 
 export class FirebaseDb {
@@ -20,7 +21,9 @@ export class FirebaseDb {
     }
 
     public async getTasks(): Promise<Task[]> {
-        const tasksSnapshot = await getDocs(collection(this.firestore, 'todo'));
+        const tasksSnapshot = await getDocs(
+            collection(this.firestore, this.getUserId()),
+        );
         const tasks = tasksSnapshot.docs.map((doc) => {
             const data = doc.data();
             return {
@@ -35,11 +38,14 @@ export class FirebaseDb {
     }
 
     public async createTask(task: Task): Promise<Task> {
-        const docRef = await addDoc(collection(this.firestore, 'todo'), {
-            title: task.title,
-            description: task.description,
-            status: task.status,
-        });
+        const docRef = await addDoc(
+            collection(this.firestore, this.getUserId()),
+            {
+                title: task.title,
+                description: task.description,
+                status: task.status,
+            },
+        );
         const newDoc = await getDoc(docRef);
         const newTask: Task = {
             id: docRef.id,
@@ -52,7 +58,7 @@ export class FirebaseDb {
     }
 
     public async updateTask(task: Task): Promise<Task> {
-        const docRef = doc(this.firestore, 'todo', task.id);
+        const docRef = doc(this.firestore, this.getUserId(), task.id);
         await setDoc(docRef, {
             title: task.title,
             description: task.description,
@@ -71,9 +77,21 @@ export class FirebaseDb {
     }
 
     public async deleteTaskAsync(taskId: string): Promise<string> {
-        const docRef = doc(collection(this.firestore, 'todo'), taskId);
+        const docRef = doc(
+            collection(this.firestore, this.getUserId()),
+            taskId,
+        );
         await deleteDoc(docRef);
         return taskId;
+    }
+
+    private getUserId(): string {
+        const userId = authService.getCurrentUserId();
+        if (!userId) {
+            throw new Error('User is not authenticated');
+        }
+
+        return userId;
     }
 }
 

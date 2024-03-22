@@ -17,6 +17,10 @@ export class TaskService {
     public async deleteTask(taskId: string): Promise<string> {
         return await firebaseDb.deleteTaskAsync(taskId);
     }
+
+    public clearTasks(): Task[] {
+        return [];
+    }
 }
 
 export const taskService = new TaskService();

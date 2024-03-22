@@ -4,11 +4,11 @@ import { TaskContainer } from './components/TaskContainerComponent/TaskContainer
 import './index.css';
 
 export default function App(): JSX.Element {
-    const { isAuthenticated, userName, authenticate, signOut } = useAuth();
+    const { isAuthenticated, user, authenticate, signOut } = useAuth();
 
     if (!isAuthenticated) {
         return <Authentication authenticate={authenticate} />;
     } else {
-        return <TaskContainer userName={userName} signOut={signOut} />;
+        return <TaskContainer user={user} signOut={signOut} />;
     }
 }

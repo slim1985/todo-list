@@ -1,14 +1,15 @@
+import { User } from '../../types/user';
 import { TaskListMemo } from '../TaskListComponent/TaskList';
 import { TaskForm } from '../TaskFormComponent/TaskForm';
 import { useTasks } from '../../hooks/useTasks';
 
 export interface TaskContainerProps {
-    userName: string;
+    user: User | null;
     signOut: () => void;
 }
 
 export function TaskContainer({
-    userName,
+    user,
     signOut,
 }: TaskContainerProps): JSX.Element {
     const [
@@ -21,15 +22,17 @@ export function TaskContainer({
         updateTask,
         deleteTask,
         openTask,
+        clearTaskList,
     ] = useTasks();
 
     return (
         <div className="flex">
             <TaskListMemo
                 taskList={taskList}
-                userName={userName}
+                user={user}
                 signOut={signOut}
                 openTask={openTask}
+                clearTaskList={clearTaskList}
             />
             {showTaskForm && (
                 <TaskForm

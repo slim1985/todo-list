@@ -1,25 +1,30 @@
 import { useState, useEffect } from 'react';
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { User } from '../types/user';
 import { firebaseApp } from '../services/firebaseApp';
 import { authService } from '../services/authService';
 
 export function useAuth(): {
     isAuthenticated: boolean;
-    userName: string;
+    user: User | null;
     authenticate: () => void;
     signOut: () => void;
 } {
-    const [userName, setUserName] = useState<string>('');
+    const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
         const auth = getAuth(firebaseApp);
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                setUserName(user.displayName!);
                 setIsAuthenticated(true);
+                setUser({
+                    id: user.uid,
+                    displayName: user.displayName || '',
+                    email: user.email || '',
+                });
             } else {
-                setUserName('');
+                setUser(null);
                 setIsAuthenticated(false);
             }
         });
@@ -33,5 +38,5 @@ export function useAuth(): {
         authService.signOut();
     }
 
-    return { isAuthenticated, userName, authenticate, signOut };
+    return { isAuthenticated, user, authenticate, signOut };
 }

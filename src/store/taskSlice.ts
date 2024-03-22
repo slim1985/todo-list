@@ -100,6 +100,10 @@ export const taskSlice = createTaskSlice({
                 },
             },
         ),
+
+        clearTasks: create.reducer((state) => {
+            return taskAdapter.removeAll(state);
+        }),
     }),
 });
 
@@ -108,6 +112,7 @@ export const {
     createTaskAsync,
     updateTaskAsync,
     deleteTaskAsync,
+    clearTasks,
 } = taskSlice.actions;
 
 export const { selectAll: selectAllTasks } =

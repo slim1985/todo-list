@@ -39,6 +39,10 @@ export class AuthService {
             console.error(`Sign-out error: ${error}`);
         });
     }
+
+    getCurrentUserId(): string | null {
+        return this.firebaseAuth.currentUser?.uid || null;
+    }
 }
 
 export const authService = new AuthService();

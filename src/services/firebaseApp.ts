@@ -1,13 +1,13 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyCiA6n6d7-fjZyhJXHTX06WX7RMrWdlTpM',
-    authDomain: 'ssulimov-todo.firebaseapp.com',
-    projectId: 'ssulimov-todo',
-    storageBucket: 'ssulimov-todo.appspot.com',
-    messagingSenderId: '177684971035',
-    appId: '1:177684971035:web:55d9d0a48e9d92d20b42be',
-    measurementId: 'G-9Z8DMNW1ZE',
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);

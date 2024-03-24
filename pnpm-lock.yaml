@@ -17,6 +17,7 @@ specifiers:
     '@typescript-eslint/eslint-plugin': ^6.13.1
     '@typescript-eslint/parser': ^6.13.1
     css-loader: ^6.8.1
+    dotenv-webpack: ^8.1.0
     eslint: ^8.54.0
     eslint-plugin-storybook: ^0.6.15
     firebase: ^10.8.0
@@ -61,6 +62,7 @@ devDependencies:
     '@typescript-eslint/eslint-plugin': 6.13.1_pxvisawvdf6aznirz3pqeakgqa
     '@typescript-eslint/parser': 6.13.1_t4y562kuozn2x6kqiutrjmhi5a
     css-loader: 6.8.1_webpack@5.89.0
+    dotenv-webpack: 8.1.0_webpack@5.89.0
     eslint: 8.54.0
     eslint-plugin-storybook: 0.6.15_t4y562kuozn2x6kqiutrjmhi5a
     html-webpack-plugin: 5.5.3_webpack@5.89.0
@@ -8507,6 +8509,15 @@ packages:
             tslib: 2.6.2
         dev: true
 
+    /dotenv-defaults/2.0.2:
+        resolution:
+            {
+                integrity: sha512-iOIzovWfsUHU91L5i8bJce3NYK5JXeAwH50Jh6+ARUdLiiGlYWfGw6UkzsYqaXZH/hjE/eCd/PlfM/qqyK0AMg==,
+            }
+        dependencies:
+            dotenv: 8.6.0
+        dev: true
+
     /dotenv-expand/10.0.0:
         resolution:
             {
@@ -8515,12 +8526,33 @@ packages:
         engines: { node: '>=12' }
         dev: true
 
+    /dotenv-webpack/8.1.0_webpack@5.89.0:
+        resolution:
+            {
+                integrity: sha512-owK1JcsPkIobeqjVrk6h7jPED/W6ZpdFsMPR+5ursB7/SdgDyO+VzAU+szK8C8u3qUhtENyYnj8eyXMR5kkGag==,
+            }
+        engines: { node: '>=10' }
+        peerDependencies:
+            webpack: ^4 || ^5
+        dependencies:
+            dotenv-defaults: 2.0.2
+            webpack: 5.89.0_webpack-cli@5.1.4
+        dev: true
+
     /dotenv/16.3.1:
         resolution:
             {
                 integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==,
             }
         engines: { node: '>=12' }
+        dev: true
+
+    /dotenv/8.6.0:
+        resolution:
+            {
+                integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==,
+            }
+        engines: { node: '>=10' }
         dev: true
 
     /duplexify/3.7.1:

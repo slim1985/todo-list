@@ -18,8 +18,8 @@ export function useAuth(): {
                 setIsAuthenticated(true);
                 setUser({
                     id: user.uid,
-                    displayName: user.displayName || '',
-                    email: user.email || '',
+                    displayName: user.displayName ?? '',
+                    email: user.email ?? '',
                 });
             } else {
                 setUser(null);

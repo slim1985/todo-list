@@ -49,15 +49,11 @@ export function useTasks(): [
     }, [taskList]);
 
     useEffect(() => {
-        getTasks();
+        dispatch(getTasksAsync(null));
     }, []);
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
-    }
-
-    function getTasks(): void {
-        dispatch(getTasksAsync(null));
     }
 
     function createTask(

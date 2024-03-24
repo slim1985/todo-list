@@ -1,10 +1,8 @@
-export interface AuthenticationProps {
+export interface LoginFormProps {
     authenticate: () => void;
 }
 
-export function Authentication({
-    authenticate,
-}: AuthenticationProps): JSX.Element {
+export function LoginForm({ authenticate }: LoginFormProps): JSX.Element {
     return (
         <div>
             <h1 className="text-center text-2xl mt-7 text-gray-600">

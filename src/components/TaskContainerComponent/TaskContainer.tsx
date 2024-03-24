@@ -1,6 +1,7 @@
 import { User } from '../../types/user';
-import { TaskListMemo } from '../TaskListComponent/TaskList';
+import { TaskList } from '../TaskListComponent/TaskList';
 import { TaskForm } from '../TaskFormComponent/TaskForm';
+import { TaskPanel } from '../TaskPanelComponent/TaskPanel';
 import { useTasks } from '../../hooks/useTasks';
 
 export interface TaskContainerProps {
@@ -27,13 +28,15 @@ export function TaskContainer({
 
     return (
         <div className="flex">
-            <TaskListMemo
-                taskList={taskList}
-                user={user}
-                signOut={signOut}
-                openTask={openTask}
-                clearTaskList={clearTaskList}
-            />
+            <div>
+                <TaskPanel
+                    user={user}
+                    signOut={signOut}
+                    clearTaskList={clearTaskList}
+                    openTask={openTask}
+                />
+                <TaskList taskList={taskList} openTask={openTask} />
+            </div>
             {showTaskForm && (
                 <TaskForm
                     task={selectedTask}

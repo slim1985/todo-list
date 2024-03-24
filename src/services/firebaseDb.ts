@@ -8,10 +8,15 @@ import {
     deleteDoc,
     doc,
     setDoc,
+    WithFieldValue,
+    DocumentData,
 } from 'firebase/firestore/lite';
 import { firebaseApp } from './firebaseApp';
-import { authService } from './authService';
-import { Task } from '../types/task';
+
+export interface FirebaseDocument {
+    id: string;
+    data: DocumentData;
+}
 
 export class FirebaseDb {
     private firestore: Firestore;
@@ -20,78 +25,68 @@ export class FirebaseDb {
         this.firestore = getFirestore(firebaseApp);
     }
 
-    public async getTasks(): Promise<Task[]> {
+    public async getManyAsync(
+        collectionName: string,
+    ): Promise<FirebaseDocument[]> {
         const tasksSnapshot = await getDocs(
-            collection(this.firestore, this.getUserId()),
+            collection(this.firestore, collectionName),
         );
-        const tasks = tasksSnapshot.docs.map((doc) => {
+
+        return tasksSnapshot.docs.map((doc) => {
             const data = doc.data();
             return {
                 id: doc.id,
-                title: data.title,
-                description: data.description,
-                status: data.status,
+                data: data,
             };
         });
-
-        return tasks;
     }
 
-    public async createTask(task: Task): Promise<Task> {
+    public async createOneAsync<T extends DocumentData>(
+        collectionName: string,
+        document: T,
+    ): Promise<FirebaseDocument> {
+        const docData: WithFieldValue<DocumentData> = {
+            ...document,
+        };
+
         const docRef = await addDoc(
-            collection(this.firestore, this.getUserId()),
-            {
-                title: task.title,
-                description: task.description,
-                status: task.status,
-            },
+            collection(this.firestore, collectionName),
+            docData,
         );
         const newDoc = await getDoc(docRef);
-        const newTask: Task = {
+
+        return {
             id: docRef.id,
-            title: newDoc.data()!.title,
-            description: newDoc.data()!.description,
-            status: newDoc.data()!.status,
+            data: newDoc.data()!,
         };
-
-        return newTask;
     }
 
-    public async updateTask(task: Task): Promise<Task> {
-        const docRef = doc(this.firestore, this.getUserId(), task.id);
-        await setDoc(docRef, {
-            title: task.title,
-            description: task.description,
-            status: task.status,
-        });
-
-        const docData = await getDoc(docRef);
-        const updatedTask: Task = {
-            id: docData.id,
-            title: docData.data()!.title,
-            description: docData.data()!.description,
-            status: docData.data()!.status,
+    public async updateOneAsync<T extends DocumentData>(
+        collectionName: string,
+        docId: string,
+        document: T,
+    ): Promise<FirebaseDocument> {
+        const docData: WithFieldValue<DocumentData> = {
+            ...document,
         };
+        const docRef = doc(this.firestore, collectionName, docId);
 
-        return updatedTask;
+        await setDoc(docRef, docData);
+        const newDocData = await getDoc(docRef);
+
+        return {
+            id: docRef.id,
+            data: newDocData.data()!,
+        };
     }
 
-    public async deleteTaskAsync(taskId: string): Promise<string> {
-        const docRef = doc(
-            collection(this.firestore, this.getUserId()),
-            taskId,
-        );
+    public async deleteOneAsync(
+        collectionName: string,
+        docId: string,
+    ): Promise<string> {
+        const docRef = doc(collection(this.firestore, collectionName), docId);
         await deleteDoc(docRef);
-        return taskId;
-    }
-
-    private getUserId(): string {
-        const userId = authService.getCurrentUserId();
-        if (!userId) {
-            throw new Error('User is not authenticated');
-        }
-
-        return userId;
+        return docId;
     }
 }
 

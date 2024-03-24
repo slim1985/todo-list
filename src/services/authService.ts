@@ -8,11 +8,15 @@ import {
 import { firebaseApp } from '../services/firebaseApp';
 
 export class AuthService {
-    private firebaseAuth: Auth;
+    public get firebaseAuth(): Auth {
+        return this._firebaseAuth;
+    }
+
+    private _firebaseAuth: Auth;
     private googleAuthProvider: GoogleAuthProvider;
 
     constructor() {
-        this.firebaseAuth = getAuth(firebaseApp);
+        this._firebaseAuth = getAuth(firebaseApp);
         this.googleAuthProvider = new GoogleAuthProvider();
     }
 

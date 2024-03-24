@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { onAuthStateChanged, getAuth } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { User } from '../types/user';
-import { firebaseApp } from '../services/firebaseApp';
 import { authService } from '../services/authService';
 
 export function useAuth(): {
@@ -14,8 +13,7 @@ export function useAuth(): {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
     useEffect(() => {
-        const auth = getAuth(firebaseApp);
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(authService.firebaseAuth, (user) => {
             if (user) {
                 setIsAuthenticated(true);
                 setUser({

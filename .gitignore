@@ -5,9 +5,15 @@
 /build
 /dist
 
+# Firestore emulator data
+/.firestore
+
+# Firestore emulator logs
+firestore-debug.log
+ui-debug.log
+
 # Environment files
 .env.local
-.env.development
 .env.development.local
 .env.test.local
 .env.production.local

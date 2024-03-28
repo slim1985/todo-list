@@ -10,6 +10,7 @@ import {
     setDoc,
     WithFieldValue,
     DocumentData,
+    connectFirestoreEmulator,
 } from 'firebase/firestore/lite';
 import { firebaseApp } from './firebaseApp';
 
@@ -23,6 +24,10 @@ export class FirebaseDb {
 
     public constructor() {
         this.firestore = getFirestore(firebaseApp);
+
+        if (process.env.NODE_ENV === 'development') {
+            connectFirestoreEmulator(this.firestore, '127.0.0.1', 8080);
+        }
     }
 
     public async getManyAsync(

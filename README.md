@@ -1,9 +1,5 @@
 # ToDo-List
 
-## Table of Contents
-
-[TOC]
-
 ## About
 
 Todo-List is an education project created for front-end development practice. It is a simple application for work with tasks.
@@ -26,28 +22,28 @@ Note: save your Firestore configuration in any place!
 
 ### Clone and Build Application
 
--   Clone repository by command:
+-   Clone repository by command:\
     `git clone https://github.com/slim1985/todo-list.git`
--   Install dependencies by running command in the root of repository:
+-   Install dependencies by running command in the root of repository:\
     `pnpm install`
 -   Set your Firestore configuration data in the `.env.development` file. Please do not checkout your configuration secrets.
--   Build application by running command in the root of repository:
+-   Build application by running command in the root of repository:\
     `pnpm run build:dev`
 
 ### Run Application
 
--   For starting application connected to real Firestore run command (in the root of repo):
+-   For starting application connected to real Firestore run command (in the root of repo):\
     `pnpm run start`
--   For starting application with Firestore Emulator run command (in the root of repo):
+-   For starting application with Firestore Emulator run command (in the root of repo):\
     `pnpm run start:dev`
--   For starting Firestore Emulator without application run command (in the root of repo):
+-   For starting Firestore Emulator without application run command (in the root of repo):\
     `pnpm run emulator:start`
 
 ## Testing
 
 ### Storybook
 
--   For starting Storybook run command (in the root of repo):
+-   For starting Storybook run command (in the root of repo):\
     `pnpm run components:start`
 
 ## Credits

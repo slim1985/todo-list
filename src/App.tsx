@@ -1,6 +1,6 @@
 import { useAuth } from './hooks/useAuth';
 import { LoginForm } from './components/LoginFormComponent/LoginForm';
-import { TaskContainer } from './components/TaskContainerComponent/TaskContainer';
+import { AppContainer } from './components/AppContainerComponent/AppContainer';
 import './index.css';
 
 export default function App(): JSX.Element {
@@ -9,6 +9,6 @@ export default function App(): JSX.Element {
     if (!isAuthenticated) {
         return <LoginForm authenticate={authenticate} />;
     } else {
-        return <TaskContainer user={user} signOut={signOut} />;
+        return <AppContainer user={user} signOut={signOut} />;
     }
 }

@@ -45,7 +45,7 @@ export const taskSlice = createTaskSlice({
         ),
 
         createTaskAsync: create.asyncThunk(
-            async (task: Task) => {
+            async (task: Omit<Task, 'id'>) => {
                 return await taskService.createTask(task);
             },
             {

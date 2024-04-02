@@ -13,6 +13,7 @@ import {
     connectFirestoreEmulator,
 } from 'firebase/firestore/lite';
 import { firebaseApp } from './firebaseApp';
+import { modes } from '../utils/constants';
 
 export interface FirebaseDocument {
     id: string;
@@ -25,7 +26,7 @@ export class FirebaseDb {
     public constructor() {
         this.firestore = getFirestore(firebaseApp);
 
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV === modes.DEVELOPMENT) {
             connectFirestoreEmulator(this.firestore, '127.0.0.1', 8080);
         }
     }
@@ -59,10 +60,15 @@ export class FirebaseDb {
             docData,
         );
         const newDoc = await getDoc(docRef);
+        const newDocData = newDoc.data();
+
+        if (!newDocData) {
+            throw new Error('Failed to create document');
+        }
 
         return {
             id: docRef.id,
-            data: newDoc.data()!,
+            data: newDocData,
         };
     }
 
@@ -77,11 +83,16 @@ export class FirebaseDb {
         const docRef = doc(this.firestore, collectionName, docId);
 
         await setDoc(docRef, docData);
-        const newDocData = await getDoc(docRef);
+        const newDoc = await getDoc(docRef);
+        const newDocData = newDoc.data();
+
+        if (!newDocData) {
+            throw new Error('Failed to create document');
+        }
 
         return {
             id: docRef.id,
-            data: newDocData.data()!,
+            data: newDocData,
         };
     }
 

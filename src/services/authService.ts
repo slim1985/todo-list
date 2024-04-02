@@ -15,6 +15,10 @@ export class AuthService {
     private _firebaseAuth: Auth;
     private googleAuthProvider: GoogleAuthProvider;
 
+    public get currentUserId(): string | null {
+        return this.firebaseAuth.currentUser?.uid || null;
+    }
+
     constructor() {
         this._firebaseAuth = getAuth(firebaseApp);
         this.googleAuthProvider = new GoogleAuthProvider();
@@ -42,10 +46,6 @@ export class AuthService {
         signOut(this.firebaseAuth).catch((error) => {
             console.error(`Sign-out error: ${error}`);
         });
-    }
-
-    getCurrentUserId(): string | null {
-        return this.firebaseAuth.currentUser?.uid || null;
     }
 }
 

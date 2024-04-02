@@ -10,6 +10,7 @@
 
 # Firestore emulator logs
 firestore-debug.log
+firebase-debug.log
 ui-debug.log
 
 # Environment files

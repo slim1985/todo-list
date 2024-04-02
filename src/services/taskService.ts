@@ -14,7 +14,7 @@ export class TaskService {
         });
     }
 
-    public async createTask(task: Task): Promise<Task> {
+    public async createTask(task: Omit<Task, 'id'>): Promise<Task> {
         const docData = await firebaseDb.createOneAsync(this.getUserId(), task);
 
         return {
@@ -49,10 +49,11 @@ export class TaskService {
     }
 
     private getUserId(): string {
-        const user = authService.getCurrentUserId();
+        const user = authService.currentUserId;
         if (user) {
             return user;
         } else {
+            console.error('User is not logged in');
             throw new Error('User is not logged in');
         }
     }

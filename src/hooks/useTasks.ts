@@ -61,7 +61,7 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        dispatch(createTaskAsync({ id: '', title, description, status }));
+        dispatch(createTaskAsync({ title, description, status }));
     }
 
     function updateTask(

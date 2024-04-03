@@ -8,7 +8,7 @@ export function LoginForm({ authenticate }: LoginFormProps): JSX.Element {
             <h1 className="text-center text-2xl mt-7 text-gray-600">
                 Please Sign-In
             </h1>
-            <div className="flex w-screen justify-center mt-14">
+            <div className="flex w-full justify-center mt-14">
                 <button
                     className="border-solid border-gray-400 border-2 py-2 px-2 rounded-lg"
                     onClick={authenticate}

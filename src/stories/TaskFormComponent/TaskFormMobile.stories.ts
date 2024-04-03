@@ -30,9 +30,21 @@ export const TaskFormEmpty: Story = {
     },
 };
 
-export const TaskFormNonEmpty: Story = {
-    name: 'Non empty',
+export const TaskFormPartialFilled: Story = {
+    name: 'Partial Filled',
     args: {
-        task: taskList[0],
+        task: taskList[1],
+    },
+};
+
+export const TaskFormFullFilled: Story = {
+    name: 'Full Filled',
+    args: {
+        task: {
+            ...taskList[0],
+            description:
+                'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit voluptate velit esse cillum dolore fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt culpa qui officia deserunt mollit anim id est laborum',
+            status: TaskStates.COMPLETED,
+        },
     },
 };

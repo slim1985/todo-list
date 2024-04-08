@@ -82,7 +82,7 @@ export function TaskForm({
     return (
         <div className="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]">
             {isLoading && <Spinner />}
-            <div className="task-form flex flex-col flex-nowrap bg-white bg-gray-300 rounded-md">
+            <div className="flex flex-col flex-nowrap w-5/6 h-5/6 bg-white bg-gray-300 rounded-md retina:rounded-3xl">
                 {isFailed && (
                     <div className="text-center text-3xl m-1 text-red-500">
                         Failed to save task. Check internet connection and try
@@ -90,7 +90,7 @@ export function TaskForm({
                     </div>
                 )}
                 <select
-                    className="text-3xl m-1"
+                    className="text-3xl retina:text-8xl m-1 retina:m-3"
                     name={ControlNames.Status}
                     value={currentTask.status}
                     onChange={(e) => onTaskChange(e)}
@@ -102,33 +102,33 @@ export function TaskForm({
                     ))}
                 </select>
                 <textarea
-                    className="h-24 border-solid border-2 border-yellow-200 rounded m-1 p-1"
+                    className="h-24 retina:h-64 border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
                     name={ControlNames.Title}
                     value={currentTask.title}
                     onChange={(e) => onTaskChange(e)}
                 ></textarea>
                 <textarea
-                    className="h-full border-solid border-2 border-yellow-200 rounded m-1 p-1"
+                    className="h-full border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
                     name={ControlNames.Description}
                     value={currentTask.description}
                     onChange={(e) => onTaskChange(e)}
                 ></textarea>
-                <div className="flex justify-center my-5 mx-3 space-x-7">
+                <div className="flex justify-center my-5 retina:my-5 mx-3 retina:mx-8 space-x-7">
                     <button
                         onClick={() => onSaveClick()}
-                        className="size-20 p-1 bg-green-300 rounded-md"
+                        className="size-20 retina:size-60 p-1 retina:p-3 bg-green-300 rounded-md retina:rounded-3xl retina:text-6xl"
                     >
                         Save
                     </button>
                     <button
                         onClick={() => hideTaskForm()}
-                        className="size-20 p-1 bg-yellow-300 rounded-md"
+                        className="size-20 retina:size-60 p-1 retina:p-3 bg-yellow-300 rounded-md retina:rounded-3xl retina:text-6xl"
                     >
                         Cancel
                     </button>
                     <button
                         onClick={() => onDeleteTaskClick()}
-                        className="size-20 p-1 bg-red-300 rounded-md"
+                        className="size-20 retina:size-60 p-1 retina:p-3 bg-red-300 rounded-md retina:rounded-3xl retina:text-6xl"
                     >
                         Delete
                     </button>

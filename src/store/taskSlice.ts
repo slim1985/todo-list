@@ -45,7 +45,7 @@ export const taskSlice = createTaskSlice({
         ),
 
         createTaskAsync: create.asyncThunk(
-            async (task: Task) => {
+            async (task: Omit<Task, 'id'>) => {
                 return await taskService.createTask(task);
             },
             {
@@ -100,6 +100,10 @@ export const taskSlice = createTaskSlice({
                 },
             },
         ),
+
+        clearTasks: create.reducer((state) => {
+            return taskAdapter.removeAll(state);
+        }),
     }),
 });
 
@@ -108,7 +112,10 @@ export const {
     createTaskAsync,
     updateTaskAsync,
     deleteTaskAsync,
+    clearTasks,
 } = taskSlice.actions;
+
 export const { selectAll: selectAllTasks } =
     taskAdapter.getSelectors<RootState>((state) => state.taskState);
+
 export default taskSlice.reducer;

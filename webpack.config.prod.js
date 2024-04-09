@@ -1,8 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
+const { modes } = require('./src/utils/constants.js');
 
 module.exports = {
-    mode: 'production',
+    mode: modes.PRODUCTION,
     entry: './src/index.tsx',
     module: {
         rules: [
@@ -29,6 +31,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
+        }),
+        new Dotenv({
+            path: './.env.production',
         }),
     ],
 };

@@ -22,3 +22,5 @@ export const TaskStateColors = {
     [TaskStates.ACTIVE]: 'text-blue-700',
     [TaskStates.COMPLETED]: 'text-gray-700',
 };
+
+export type TaskData = Omit<Task, 'id'>;

@@ -8,6 +8,7 @@ import {
     updateTaskAsync,
     deleteTaskAsync,
     selectAllTasks,
+    clearTasks,
 } from '../store/taskSlice';
 import { StateStatus } from '../types/stateStatus';
 import { RootState, store } from '../store/store';
@@ -31,6 +32,7 @@ export function useTasks(): [
     ) => void,
     deleteTask: (taskId: string) => void,
     openTask: (taskId: string | null) => void,
+    clearTaskList: () => void,
 ] {
     const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -59,14 +61,7 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        // Find new unique id.
-        let id: number = taskList.length + 1;
-        while (taskList.find((f) => f.id === id.toString())) {
-            id++;
-        }
-        dispatch(
-            createTaskAsync({ id: id.toString(), title, description, status }),
-        );
+        dispatch(createTaskAsync({ title, description, status }));
     }
 
     function updateTask(
@@ -88,6 +83,10 @@ export function useTasks(): [
         setShowTaskForm(true);
     }
 
+    function clearTaskList(): void {
+        dispatch(clearTasks());
+    }
+
     return [
         taskList,
         stateStatus,
@@ -98,5 +97,6 @@ export function useTasks(): [
         updateTask,
         deleteTask,
         openTask,
+        clearTaskList,
     ] as const;
 }

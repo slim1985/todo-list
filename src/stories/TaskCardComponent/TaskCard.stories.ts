@@ -25,14 +25,20 @@ export const TaskCardEmpty: Story = {
             id: '',
             title: '',
             description: '',
-            status: TaskStates.NEW,
+            status: TaskStates.ACTIVE,
         },
     },
 };
 
-export const TaskCardNonEmpty: Story = {
-    name: 'Non empty',
+export const TaskCardFullFilled: Story = {
+    name: 'Full Filled',
     args: {
         task: taskList[0],
+    },
+};
+export const TaskCardPartialFilled: Story = {
+    name: 'Partial Filled',
+    args: {
+        task: taskList[2],
     },
 };

@@ -1,7 +1,7 @@
 [
     {
         "id": "1",
-        "title": "Create project using React + Typescript + TalewindCSS",
+        "title": "Create project using React + Typescript + TalewindCSS + Redux + Firebase + Firebase Emulator + Storybook + Jest + ",
         "description": "Need to create project using React + Typescript + TalewindCSS and configure engineering processes. Also, use Storybook for UI components development.",
         "status": "0"
     },

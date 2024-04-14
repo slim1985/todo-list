@@ -4,7 +4,10 @@ const config = {
     coverageProvider: 'v8',
 
     // A list of reporter names that Jest uses when writing coverage reports
-    coverageReporters: ['text'],
+    coverageReporters: ['text', 'html', 'cobertura'],
+
+    // The directory where Jest should output its coverage files
+    coverageDirectory: 'coverage',
 
     // An array of directory names to be searched recursively up from the requiring module's location
     moduleDirectories: ['node_modules'],

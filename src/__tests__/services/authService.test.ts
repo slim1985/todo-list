@@ -18,7 +18,7 @@ describe('authService', () => {
 
         // Act
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { authService } = require('../services/authService');
+        const { authService } = require('../../services/authService');
 
         // Assert
         expect(authService.currentUserId).toBe('1');
@@ -39,7 +39,7 @@ describe('authService', () => {
 
         // Act
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { authService } = require('../services/authService');
+        const { authService } = require('../../services/authService');
         authService.authenticate();
 
         // Assert
@@ -63,7 +63,7 @@ describe('authService', () => {
 
         // Act
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { authService } = require('../services/authService');
+        const { authService } = require('../../services/authService');
         authService.signOut();
 
         // Assert

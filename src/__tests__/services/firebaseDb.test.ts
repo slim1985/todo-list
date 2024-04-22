@@ -1,8 +1,8 @@
 import { DocumentData } from 'firebase/firestore/lite';
-import { firebaseDb } from '../services/firebaseDb';
+import { firebaseDb } from '../../services/firebaseDb';
 import { QuerySnapshot } from 'firebase/firestore';
 
-jest.mock('../services/authService', () => {
+jest.mock('../../services/authService', () => {
     return {
         authService: {
             currentUserId: '1',
@@ -10,7 +10,7 @@ jest.mock('../services/authService', () => {
     };
 });
 
-jest.mock('../services/firebaseApp', () => {
+jest.mock('../../services/firebaseApp', () => {
     return {
         firebaseApp: {},
     };

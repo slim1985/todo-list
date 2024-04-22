@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskCard TaskCard memoization works correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+  >
+    <h2
+      class="w-full font-bold retina:text-6xl"
+    >
+      Task 1
+    </h2>
+    <p
+      class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+    >
+      Task 1 description
+    </p>
+    <p
+      class="w-full font-bold retina:text-6xl"
+    >
+      Task state: 
+      <span
+        class="text-green-700"
+      >
+        New
+      </span>
+    </p>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TaskCard TaskCard renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+  >
+    <h2
+      class="w-full font-bold retina:text-6xl"
+    >
+      Task 1
+    </h2>
+    <p
+      class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+    >
+      Task 1 description
+    </p>
+    <p
+      class="w-full font-bold retina:text-6xl"
+    >
+      Task state: 
+      <span
+        class="text-green-700"
+      >
+        New
+      </span>
+    </p>
+  </div>
+</DocumentFragment>
+`;

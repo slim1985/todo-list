@@ -1,7 +1,7 @@
-import { taskService } from '../services/taskService';
-import { Task, TaskStates } from '../types/task';
+import { taskService } from '../../services/taskService';
+import { Task, TaskStates } from '../../types/task';
 
-jest.mock('../services/firebaseDb', () => {
+jest.mock('../../services/firebaseDb', () => {
     return {
         firebaseDb: {
             getManyAsync: jest.fn(() => {
@@ -49,7 +49,7 @@ jest.mock('../services/firebaseDb', () => {
     };
 });
 
-jest.mock('../services/authService', () => {
+jest.mock('../../services/authService', () => {
     return {
         authService: {
             currentUserId: '1',
@@ -57,7 +57,7 @@ jest.mock('../services/authService', () => {
     };
 });
 
-jest.mock('../services/firebaseApp', () => {
+jest.mock('../../services/firebaseApp', () => {
     return {
         firebaseApp: {},
     };

@@ -44,9 +44,9 @@ describe('TaskCard', () => {
         // Arrange.
         // Act.
         render(<TaskCard task={task} onClick={onClick} />);
+        screen.getByText(task.title).click();
 
         // Assert.
-        screen.getByText(task.title).click();
         expect(onClick).toHaveBeenCalledTimes(1);
     });
 

@@ -1,0 +1,39 @@
+name: pr-workflow
+run-name: PR Workflow for ${{ github.actor }}
+
+on:
+    pull_request:
+        branches:
+            - main
+        types:
+            - opened
+            - synchronize
+            - merged
+            - reopened
+
+jobs:
+    build-and-test:
+        runs-on: windows-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '19.x'
+
+            - uses: pnpm/action-setup@v3
+              with:
+                  version: 7
+
+            - name: Install Dependencies
+              run: pnpm install
+
+            - name: Check Code Style
+              run: pnpm run linter:check
+
+            - name: Check Formatting
+              run: pnpm run formatter:check
+
+            - name: Build
+              run: pnpm run build:dev

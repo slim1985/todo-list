@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskContainer TaskContainer renders correctly with showTaskForm 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-center"
+  >
+    <div>
+      <div
+        class="flex flex-wrap justify-center mt-3"
+      >
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 1
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 1 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-green-700"
+            >
+              New
+            </span>
+          </p>
+        </div>
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 2
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 2 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-blue-700"
+            >
+              Active
+            </span>
+          </p>
+        </div>
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 3
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 3 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-gray-700"
+            >
+              Completed
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex justify-center items-center z-10 fixed h-full w-full overflow-hidden bg-black/[.5]"
+    >
+      <div
+        class="flex flex-col flex-nowrap w-5/6 h-5/6 bg-white bg-gray-300 rounded-md retina:rounded-3xl"
+      >
+        <select
+          class="text-3xl retina:text-8xl m-1 retina:m-3"
+          name="status"
+        >
+          <option
+            value="0"
+          >
+            New
+          </option>
+          <option
+            value="1"
+          >
+            Active
+          </option>
+          <option
+            value="2"
+          >
+            Completed
+          </option>
+        </select>
+        <textarea
+          class="h-24 retina:h-64 border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
+          name="title"
+        >
+          Task 1
+        </textarea>
+        <textarea
+          class="h-full border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
+          name="description"
+        >
+          Task 1 description
+        </textarea>
+        <div
+          class="flex justify-center my-5 retina:my-5 mx-3 retina:mx-8 space-x-7"
+        >
+          <button
+            class="size-20 retina:size-60 p-1 retina:p-3 bg-green-300 rounded-md retina:rounded-3xl retina:text-6xl"
+          >
+            Save
+          </button>
+          <button
+            class="size-20 retina:size-60 p-1 retina:p-3 bg-yellow-300 rounded-md retina:rounded-3xl retina:text-6xl"
+          >
+            Cancel
+          </button>
+          <button
+            class="size-20 retina:size-60 p-1 retina:p-3 bg-red-300 rounded-md retina:rounded-3xl retina:text-6xl"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TaskContainer TaskContainer renders correctly without showTaskForm 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-center"
+  >
+    <div>
+      <div
+        class="flex flex-wrap justify-center mt-3"
+      >
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 1
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 1 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-green-700"
+            >
+              New
+            </span>
+          </p>
+        </div>
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 2
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 2 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-blue-700"
+            >
+              Active
+            </span>
+          </p>
+        </div>
+        <div
+          class="flex flex-col flex-nowrap w-64 md:w-96 retina:w-4/12 h-48 md:h-64 retina:h-192 m-1 retina:m-4 p-2 retina:p-8 items-stretch justify-left cursor-pointer border-solid border-2 retina:border-4 border-gray-400 rounded-lg retina:rounded-3xl"
+        >
+          <h2
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task 3
+          </h2>
+          <p
+            class="w-full h-screen py-2 retina:py-8 overflow-hidden text-ellipsis text-sm retina:text-6xl"
+          >
+            Task 3 description
+          </p>
+          <p
+            class="w-full font-bold retina:text-6xl"
+          >
+            Task state: 
+            <span
+              class="text-gray-700"
+            >
+              Completed
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

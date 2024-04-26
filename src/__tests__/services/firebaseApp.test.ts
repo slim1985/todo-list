@@ -23,7 +23,7 @@ describe('firebaseApp', () => {
         // Act
 
         // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const { firebaseApp } = require('../services/firebaseApp');
+        const { firebaseApp } = require('../../services/firebaseApp');
 
         // Assert
         expect(firebaseApp).toBeDefined();

@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskPanel TaskPanel renders correctly with user 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-start sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2 retina:border-b-4"
+  >
+    <div
+      class="flex w-2/4 justify-start items-center float-left"
+    >
+      <div
+        class="ml-2 retina:ml-6"
+      >
+        <p
+          class="font-semibold retina:text-5xl"
+        >
+          Test User
+        </p>
+        <p
+          class="retina:mt-3 text-sm retina:text-5xl"
+        >
+          user@user.com
+        </p>
+        <button
+          class="mt-2 retina:mt-5 retina:text-5xl"
+        >
+          Sign Out
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex w-2/4 justify-end"
+    >
+      <button
+        class="size-20 retina:size-52 my-2 retina:my-4 mr-2 retina:mr-5 p-1 retina:text-5xl bg-gray-300 rounded-md retina:rounded-3xl"
+      >
+        Create
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TaskPanel TaskPanel renders correctly without user 1`] = `
+<DocumentFragment>
+  <div
+    class="flex justify-start sticky top-0 space-x-3 bg-white solid border-gray-400 border-b-2 retina:border-b-4"
+  />
+</DocumentFragment>
+`;

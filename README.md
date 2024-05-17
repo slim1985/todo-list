@@ -46,6 +46,11 @@ Note: save your Firestore configuration in any place!
 -   For starting Storybook run command (in the root of repo):\
     `pnpm run components:start`
 
+### Unit Testing and Integration Testing
+
+-   For starting unit and integration tests run command (in the root of repo):\
+    `pnpm run test`
+
 ## Credits
 
 Thanks [Alexei Gudashev](https://github.com/Gudashev 'Alexei Gudashev') for advice and code reviews.

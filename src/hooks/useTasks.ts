@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from 'react';
-//import { useTaskSelector } from '../store/useTaskSelector';
-//import { useTaskDispatch } from '../store/useTaskDispatch';
+import { useTaskSelector } from '../store/useTaskSelector';
+import { useTaskDispatch } from '../store/useTaskDispatch';
 import { Task, TaskStates } from '../types/task';
-// import {
-//     createTaskAsync,
-//     updateTaskAsync,
-//     deleteTaskAsync,
-//     selectAllTasks,
-//     clearTasks,
-// } from '../store/taskSlice';
-import { selectAllTasks } from '../store/taskSlice';
-//import { getTasksAsync } from '../store/taskQueries';
+import {
+    getTasksAsync,
+    createTaskAsync,
+    updateTaskAsync,
+    deleteTaskAsync,
+    selectAllTasks,
+    clearTasks,
+} from '../store/taskSlice';
 import { StateStatus } from '../types/stateStatus';
-//import { RootState, store } from '../store/store';
+import { RootState, store } from '../store/store';
 
 export function useTasks(): [
     taskList: Task[],
@@ -38,13 +36,11 @@ export function useTasks(): [
 ] {
     const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-    //const dispatch = useTaskDispatch();
-    // const stateStatus = useTaskSelector(
-    //     (state: RootState) => state.taskState.status,
-    // );
-    const stateStatus = StateStatus.IDLE;
-    const taskList: Task[] = [];
-    //const taskList = selectAllTasks(store.getState());
+    const dispatch = useTaskDispatch();
+    const stateStatus = useTaskSelector(
+        (state: RootState) => state.taskState.status,
+    );
+    const taskList = selectAllTasks(store.getState());
 
     useEffect(() => {
         if (showTaskForm) {
@@ -52,9 +48,9 @@ export function useTasks(): [
         }
     }, [taskList]);
 
-    // useEffect(() => {
-    //     getTasksAsync();
-    // }, []);
+    useEffect(() => {
+        dispatch(getTasksAsync(null));
+    }, []);
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
@@ -65,7 +61,7 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        //dispatch(createTaskAsync({ title, description, status }));
+        dispatch(createTaskAsync({ title, description, status }));
     }
 
     function updateTask(
@@ -74,11 +70,11 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        //dispatch(updateTaskAsync({ id, title, description, status }));
+        dispatch(updateTaskAsync({ id, title, description, status }));
     }
 
     function deleteTask(taskId: string): void {
-        //dispatch(deleteTaskAsync(taskId));
+        dispatch(deleteTaskAsync(taskId));
     }
 
     function openTask(taskId: string | null): void {
@@ -88,7 +84,7 @@ export function useTasks(): [
     }
 
     function clearTaskList(): void {
-        //dispatch(clearTasks());
+        dispatch(clearTasks());
     }
 
     return [

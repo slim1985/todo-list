@@ -1,4 +1,3 @@
-import { getTasksAsync } from '../../store/taskQueries';
 import { useTasks } from '../../hooks/useTasks';
 import { TaskContainer } from '../../components/TaskContainerComponent/TaskContainer';
 import { TaskPanel } from '../../components/TaskPanelComponent/TaskPanel';
@@ -26,9 +25,6 @@ export function AppContainer({
         clearTaskList,
     ] = useTasks();
 
-    console.log(taskList);
-    const taskList1 = getTasksAsync();
-
     return (
         <div>
             {!showTaskForm && (
@@ -40,7 +36,7 @@ export function AppContainer({
                 />
             )}
             <TaskContainer
-                taskList={taskList1}
+                taskList={taskList}
                 stateStatus={stateStatus}
                 showTaskForm={showTaskForm}
                 selectedTask={selectedTask}

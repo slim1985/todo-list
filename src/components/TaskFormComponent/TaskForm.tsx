@@ -2,6 +2,7 @@ import React from 'react';
 import { Spinner } from '../SpinnerComponent/Spinner';
 import { Task, TaskStates, TaskStateLabels } from '../../types/task';
 import { StateStatus } from '../../types/stateStatus';
+import { ElementsNames } from '../../types/elementsNames';
 
 enum ControlNames {
     Title = 'title',
@@ -90,6 +91,7 @@ export function TaskForm({
                     </div>
                 )}
                 <select
+                    data-testid={ElementsNames.STATUS_SELECT}
                     className="text-3xl retina:text-8xl m-1 retina:m-3"
                     name={ControlNames.Status}
                     value={currentTask.status}
@@ -102,12 +104,14 @@ export function TaskForm({
                     ))}
                 </select>
                 <textarea
+                    data-testid={ElementsNames.TITLE_TEXT_AREA}
                     className="h-24 retina:h-64 border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
                     name={ControlNames.Title}
                     value={currentTask.title}
                     onChange={(e) => onTaskChange(e)}
                 ></textarea>
                 <textarea
+                    data-testid={ElementsNames.DESCRIPTION_TEXT_AREA}
                     className="h-full border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
                     name={ControlNames.Description}
                     value={currentTask.description}

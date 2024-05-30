@@ -33,7 +33,14 @@ const config = {
         '!src/utils/*.{js,ts}',
         '!**/node_modules/**',
         '!**/vendor/**',
+        '!src/index.tsx',
     ],
+
+    coverageThreshold: {
+        global: {
+            statements: 90,
+        },
+    },
 };
 
 module.exports = config;

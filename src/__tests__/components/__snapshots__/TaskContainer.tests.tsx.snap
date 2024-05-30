@@ -91,6 +91,7 @@ exports[`TaskContainer TaskContainer renders correctly with showTaskForm 1`] = `
       >
         <select
           class="text-3xl retina:text-8xl m-1 retina:m-3"
+          data-testid="status-select"
           name="status"
         >
           <option
@@ -111,12 +112,14 @@ exports[`TaskContainer TaskContainer renders correctly with showTaskForm 1`] = `
         </select>
         <textarea
           class="h-24 retina:h-64 border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
+          data-testid="title-textarea"
           name="title"
         >
           Task 1
         </textarea>
         <textarea
           class="h-full border-solid border-2 retina:border-4 border-yellow-200 rounded retina:rounded-2xl m-1 retina:m-3 p-1 retina:p-3 retina:text-6xl"
+          data-testid="description-textarea"
           name="description"
         >
           Task 1 description

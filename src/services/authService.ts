@@ -1,11 +1,13 @@
 import {
     Auth,
+    connectAuthEmulator,
     getAuth,
     GoogleAuthProvider,
     signInWithPopup,
     signOut,
 } from 'firebase/auth';
 import { firebaseApp } from '../services/firebaseApp';
+import { modes } from '../utils/constants';
 
 export class AuthService {
     public get firebaseAuth(): Auth {
@@ -21,6 +23,12 @@ export class AuthService {
 
     constructor() {
         this._firebaseAuth = getAuth(firebaseApp);
+        if (process.env.NODE_ENV === modes.DEVELOPMENT) {
+            connectAuthEmulator(this._firebaseAuth, 'http://127.0.0.1:9099', {
+                disableWarnings: true,
+            });
+        }
+
         this.googleAuthProvider = new GoogleAuthProvider();
     }
 

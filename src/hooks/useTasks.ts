@@ -1,17 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useTaskSelector } from '../store/useTaskSelector';
-import { useTaskDispatch } from '../store/useTaskDispatch';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { taskService } from '../services/taskService';
 import { Task, TaskStates } from '../types/task';
-import {
-    getTasksAsync,
-    createTaskAsync,
-    updateTaskAsync,
-    deleteTaskAsync,
-    selectAllTasks,
-    clearTasks,
-} from '../store/taskSlice';
 import { StateStatus } from '../types/stateStatus';
-import { RootState, store } from '../store/store';
 
 export function useTasks(): [
     taskList: Task[],
@@ -34,23 +25,68 @@ export function useTasks(): [
     openTask: (taskId: string | null) => void,
     clearTaskList: () => void,
 ] {
+    const queryClient = useQueryClient();
     const [showTaskForm, setShowTaskForm] = useState<boolean>(false);
     const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-    const dispatch = useTaskDispatch();
-    const stateStatus = useTaskSelector(
-        (state: RootState) => state.taskState.status,
+    const [stateStatus, setStateStatus] = useState<StateStatus>(
+        StateStatus.IDLE,
     );
-    const taskList = selectAllTasks(store.getState());
+
+    const { data: taskList } = useQuery({
+        queryKey: ['tasks'],
+        queryFn: async () => await taskService.getTasks(),
+        initialData: [],
+    });
+
+    const updateTaskMutation = useMutation({
+        mutationFn: async (task: Task) => {
+            setStateStatus(StateStatus.LOADING);
+            return await taskService.updateTask(task);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            setStateStatus(StateStatus.IDLE);
+            setShowTaskForm(false);
+        },
+        onError: () => {
+            setStateStatus(StateStatus.FAILED);
+        },
+    });
+
+    const createTaskMutation = useMutation({
+        mutationFn: async (task: Task) => {
+            setStateStatus(StateStatus.LOADING);
+            return await taskService.createTask(task);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            setStateStatus(StateStatus.IDLE);
+            setShowTaskForm(false);
+        },
+        onError: () => {
+            setStateStatus(StateStatus.FAILED);
+        },
+    });
+
+    const deleteTaskMutation = useMutation({
+        mutationFn: async (taskId: string) => {
+            setStateStatus(StateStatus.LOADING);
+            return await taskService.deleteTask(taskId);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            setStateStatus(StateStatus.IDLE);
+        },
+        onError: () => {
+            setStateStatus(StateStatus.FAILED);
+        },
+    });
 
     useEffect(() => {
         if (showTaskForm) {
             setShowTaskForm(false);
         }
     }, [taskList]);
-
-    useEffect(() => {
-        dispatch(getTasksAsync(null));
-    }, []);
 
     function hideTaskForm(): void {
         setShowTaskForm(false);
@@ -61,7 +97,8 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        dispatch(createTaskAsync({ title, description, status }));
+        const id = '';
+        createTaskMutation.mutate({ id, title, description, status });
     }
 
     function updateTask(
@@ -70,21 +107,22 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        dispatch(updateTaskAsync({ id, title, description, status }));
+        updateTaskMutation.mutate({ id, title, description, status });
     }
 
     function deleteTask(taskId: string): void {
-        dispatch(deleteTaskAsync(taskId));
+        deleteTaskMutation.mutate(taskId);
     }
 
     function openTask(taskId: string | null): void {
         const task = taskList.find((task) => task.id === taskId) ?? null;
+
         setSelectedTask(task);
         setShowTaskForm(true);
     }
 
     function clearTaskList(): void {
-        dispatch(clearTasks());
+        queryClient.clear();
     }
 
     return [

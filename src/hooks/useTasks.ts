@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { taskService } from '../services/taskService';
-import { Task, TaskStates } from '../types/task';
+import { Task, TaskData, TaskStates } from '../types/task';
 import { StateStatus } from '../types/stateStatus';
 
 export function useTasks(): [
@@ -32,8 +32,10 @@ export function useTasks(): [
         StateStatus.IDLE,
     );
 
+    const tasksQueryKey = 'tasks';
+
     const { data: taskList } = useQuery({
-        queryKey: ['tasks'],
+        queryKey: [tasksQueryKey],
         queryFn: async () => await taskService.getTasks(),
         initialData: [],
     });
@@ -44,7 +46,7 @@ export function useTasks(): [
             return await taskService.updateTask(task);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
             setStateStatus(StateStatus.IDLE);
             setShowTaskForm(false);
         },
@@ -54,12 +56,12 @@ export function useTasks(): [
     });
 
     const createTaskMutation = useMutation({
-        mutationFn: async (task: Task) => {
+        mutationFn: async (taskData: TaskData) => {
             setStateStatus(StateStatus.LOADING);
-            return await taskService.createTask(task);
+            return await taskService.createTask(taskData);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
             setStateStatus(StateStatus.IDLE);
             setShowTaskForm(false);
         },
@@ -74,7 +76,7 @@ export function useTasks(): [
             return await taskService.deleteTask(taskId);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['tasks'] });
+            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
             setStateStatus(StateStatus.IDLE);
         },
         onError: () => {
@@ -97,8 +99,7 @@ export function useTasks(): [
         description: string,
         status: TaskStates,
     ): void {
-        const id = '';
-        createTaskMutation.mutate({ id, title, description, status });
+        createTaskMutation.mutate({ title, description, status });
     }
 
     function updateTask(

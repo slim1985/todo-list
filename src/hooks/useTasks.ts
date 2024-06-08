@@ -45,8 +45,11 @@ export function useTasks(): [
             setStateStatus(StateStatus.LOADING);
             return await taskService.updateTask(task);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
+        onSuccess: (task) => {
+            const newTaskList = taskList.filter((f) => f.id !== task.id);
+            newTaskList.push(task);
+            queryClient.setQueryData([tasksQueryKey], newTaskList);
+
             setStateStatus(StateStatus.IDLE);
             setShowTaskForm(false);
         },
@@ -60,8 +63,10 @@ export function useTasks(): [
             setStateStatus(StateStatus.LOADING);
             return await taskService.createTask(taskData);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
+        onSuccess: (task) => {
+            taskList.push(task);
+            queryClient.setQueryData([tasksQueryKey], taskList);
+
             setStateStatus(StateStatus.IDLE);
             setShowTaskForm(false);
         },
@@ -75,8 +80,11 @@ export function useTasks(): [
             setStateStatus(StateStatus.LOADING);
             return await taskService.deleteTask(taskId);
         },
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [tasksQueryKey] });
+        onSuccess: (taskId) => {
+            queryClient.setQueryData(
+                [tasksQueryKey],
+                taskList.filter((task) => task.id !== taskId),
+            );
             setStateStatus(StateStatus.IDLE);
         },
         onError: () => {

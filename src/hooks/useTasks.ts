@@ -46,9 +46,9 @@ export function useTasks(): [
             return await taskService.updateTask(task);
         },
         onSuccess: (task) => {
-            const newTaskList = taskList.filter((f) => f.id !== task.id);
-            newTaskList.push(task);
-            queryClient.setQueryData([tasksQueryKey], newTaskList);
+            const index = taskList.findIndex((f) => f.id === task.id);
+            taskList[index] = task;
+            queryClient.setQueryData([tasksQueryKey], taskList);
 
             setStateStatus(StateStatus.IDLE);
             setShowTaskForm(false);

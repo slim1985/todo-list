@@ -134,11 +134,16 @@ describe('Integration tests', () => {
         getAuth().updateCurrentUser(null);
 
         // Act 1. Render the authentication page.
-        const { asFragment, getByText, getByTestId } = render(<App />);
+        const { asFragment, getByText, getByTestId, findByText } = render(
+            <App />,
+        );
         expect(asFragment()).toMatchSnapshot('1. Authentication page');
 
-        // Act 2. Sign-in by Google.
         await waitFor(() => getByText('Sign-in by Google').click());
+
+        // Wait for the tasks to be loaded before making assertions
+        await findByText('Task 2');
+
         expect(asFragment()).toMatchSnapshot('2. Tasks page');
 
         // Act 3. Open task.
@@ -172,11 +177,19 @@ describe('Integration tests', () => {
 
         // Act 5. Save updated task.
         await waitFor(() => getByText('Save').click());
+
+        // Wait for the tasks to be loaded before making assertions
+        await findByText('Task 2');
+
         expect(asFragment()).toMatchSnapshot('5. Task page saved');
 
         // Act 6. Create and save task.
         await waitFor(() => getByText('Create').click());
         await waitFor(() => getByText('Save').click());
+
+        // Wait for the tasks to be loaded before making assertions
+        await findByText('Task 2');
+
         expect(asFragment()).toMatchSnapshot('6. Task page created and saved');
 
         // Act 7. Open and close task form.
@@ -187,6 +200,10 @@ describe('Integration tests', () => {
         // Act 8. Delete task.
         await waitFor(() => getByText('Title').click());
         await waitFor(() => getByText('Delete').click());
+
+        // Wait for the tasks to be loaded before making assertions
+        await findByText('Task 2');
+
         expect(asFragment()).toMatchSnapshot('8. Delete task');
 
         // Act 9. Sign-out.

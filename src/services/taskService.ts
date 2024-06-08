@@ -14,7 +14,7 @@ export class TaskService {
         });
     }
 
-    public async createTask(task: Omit<Task, 'id'>): Promise<Task> {
+    public async createTask(task: TaskData): Promise<Task> {
         const docData = await firebaseDb.createOneAsync(this.getUserId(), task);
 
         return {

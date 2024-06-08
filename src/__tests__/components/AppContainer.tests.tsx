@@ -33,30 +33,6 @@ const taskList: Task[] = [
 
 const signOut = jest.fn();
 
-jest.mock('../../store/taskSlice', () => ({
-    getTasksAsync: jest.fn(),
-    createTaskAsync: jest.fn(),
-    updateTaskAsync: jest.fn(),
-    deleteTaskAsync: jest.fn(),
-    selectAllTasks: jest.fn(),
-    clearTasks: jest.fn(),
-}));
-
-jest.mock('../../store/useTaskSelector', () => ({
-    useTaskSelector: jest.fn(),
-}));
-
-jest.mock('../../store/useTaskDispatch', () => ({
-    useTaskDispatch: jest.fn(),
-}));
-
-jest.mock('../../store/store', () => ({
-    RootState: jest.fn(),
-    store: {
-        getState: jest.fn(),
-    },
-}));
-
 jest.mock('../../hooks/useTasks', () => ({
     useTasks: (): useTasksType => getUseTasksMocks(false),
 }));
